@@ -1,0 +1,75 @@
+﻿@model IEnumerable<Clustering.Models.Point>
+@{
+    ViewData["Title"] = "GetMap";
+}
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+    <link href="/lib/bootstrap/dist/css/bootstrap-grid.css" rel="stylesheet" />
+    <meta name="viewport" />
+    <title>GetMap</title>
+</head>
+<style>
+    #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+</style>
+<body>
+    <div id="map"></div>
+</body>
+<script>
+
+    var map = L.map("map").setView([33, 44], 6);
+    mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+    L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: "&copy; " + mapLink + " Contributors",
+        maxZoom: 18,
+    }).addTo(map);
+
+    var planes = @Html.Raw(
+        Json.Serialize(
+            Model.Select(user => new
+            {
+                Id = user.Id,
+                Lat = user.Lat,
+                Lan = user.Lan
+            })
+        )
+    );
+
+    for (var i = 0; i < planes.length; i++) {
+
+            L.marker([
+                planes[i].lat,
+                planes[i].lan
+            ])
+                .bindPopup('' + planes[i].id)
+                .openPopup()
+            .addTo(map);
+    }
+    console.log(planes);
+
+    var markers = new L.MarkerClusterGroup();
+
+    markers.addLayer(L.marker([31.052934, 44.744211]));
+    // add more markers here...
+
+
+    map.addLayer(markers);
+
+</script>
+</html>
+
+
