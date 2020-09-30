@@ -170,6 +170,7 @@ namespace Clustering.Controllers
             return View(points);
         }
 
+        [HttpGet]
         public async Task<IActionResult> GetClusteringMap()
         {
             var Object = await ForGetClusteringMap(new TypesCities { });
@@ -192,8 +193,8 @@ namespace Clustering.Controllers
         private async Task<TypesCities> ForGetClusteringMap(TypesCities input)
         {
             var points = await _context.Points.Include(p => p.Type).Include(p => p.City)
-                .Where(p => !input.Types.Any() || input.Types.Select(t => t.Name).Contains(p.Type.Name))
-                .Where(p => !input.Cities.Any() || input.Cities.Select(c => c.Name).Contains(p.City.Name))
+                .Where(p => input.Types == null || !input.Types.Any() || input.Types.Select(t => t.Value).Contains(p.TypeId.ToString()))
+                .Where(p => input.Cities == null || input.Cities.Select(c => c.Value).Contains(p.TypeId.ToString()))
                 .ToListAsync();
             return new TypesCities
             {

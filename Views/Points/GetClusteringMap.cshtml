@@ -26,9 +26,15 @@
         <div class="col-5">
             <form asp-action="GetClusteringMap" method="post">
                 <div class="form-group">
-                    <label asp-for="Lat" class="control-label"></label>
-                    <input min="29" max="49" asp-for="Lat" class="form-control" />
-                    <span asp-validation-for="Lat" class="text-danger"></span>
+                    <label asp-for="Types" class="control-label"></label>
+                    <select asp-for="Types" class="form-control" asp-items="Model.Types"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Cities" class="control-label"></label>
+                    <select asp-for="Cities" class="form-control" asp-items="Model.Cities"></select>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="View In Map" class="btn btn-primary" />
                 </div>
             </form>
         </div>
