@@ -25,7 +25,6 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\js\Clustering\" />
-    <Folder Include="wwwroot\pictures\" />
   </ItemGroup>
 
 </Project>

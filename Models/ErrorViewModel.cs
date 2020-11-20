@@ -1,5 +1,3 @@
-using System;
-
 namespace Clustering.Models
 {
     public class ErrorViewModel
