@@ -1,5 +1,28 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<img src="/pictures/homePictuers.jpg" alt="HomePicture" />
+@if (SignInManager.IsSignedIn(User) && User.IsInRole("Clustering"))
+{
+    <img src="/pictures/homePictuers.jpg" alt="HomePicture" />
+}
+else if (SignInManager.IsSignedIn(User) && User.IsInRole("Storage"))
+{
+    <style>
+        .img {
+            width: 109%;
+        }
+    </style>
+    <img class="img" src="/pictures/home3.png" alt="HomePicture" />
+}
+else
+{
+    <style>
+        .img {
+            width: 109%;
+        }
+    </style>
+    <img class="img" src="/pictures/home2.png" alt="HomePicture" />
+}

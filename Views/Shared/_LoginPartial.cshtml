@@ -10,8 +10,22 @@
         padding: 5px 28px;
         font-size: 16px;
         cursor: pointer;
-        margin-left : 5px;
-        border-radius : 10px;
+        margin-left: 5px;
+        border-radius: 10px;
+    }
+
+    .button {
+        background-color: #4CAF50; /* Green */
+        border: none;
+        color: white;
+        padding: 5px 12px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius:15px;
     }
 
     /* Green */
@@ -67,26 +81,44 @@
         .default:hover {
             background: #e7e7e7;
         }
+
+    .button2 {
+        background-color: #008CBA;
+    }
+    /* Blue */
+    .button3 {
+        background-color: #f44336;
+    }
+    /* Red */
+    .button4 {
+        background-color: #e7e7e7;
+        color: black;
+    }
+    /* Gray */
+    .button5 {
+        background-color: #555555;
+    }
+    /* Black */
 </style>
 <ul class="navbar-nav">
-@if (SignInManager.IsSignedIn(User))
-{
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"> @User.Identity.Name <img style="width:35px;border-radius:20px" src="/pictures/user.png" alt="HomePicture" /></a>
-    </li>
-    <li class="nav-item">
-        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button  type="submit" class="nav-link btn btn-dark">Logout</button>
-        </form>
-    </li>
-}
-else
-{
-    <li class="nav-item">
-        <a class="nav-link bten danger" asp-area="Identity" asp-page="/Account/Register">Register</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link bten danger" asp-area="Identity" asp-page="/Account/Login">Login</a>
-    </li>
-}
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"> @User.Identity.Name <img style="width:35px;border-radius:20px" src="/pictures/user.png" alt="HomePicture" /></a>
+        </li>
+        <li class="nav-item">
+            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button type="submit" class="button button5">Logout</button>
+            </form>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link bten danger" asp-area="Identity" asp-page="/Account/Register">Register</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link bten danger" asp-area="Identity" asp-page="/Account/Login">Login</a>
+        </li>
+    }
 </ul>
