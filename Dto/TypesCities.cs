@@ -6,7 +6,7 @@ namespace Clustering.Dto
 {
     public class TypesCities
     {
-        public SelectList Types { get; set; }
+        public List<Type> Types { get; set; }
         public SelectList Cities { get; set; }
         public List<Point> Points { get; set; }
     }

@@ -30,9 +30,6 @@
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.City)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Geom)
             </th>
             <th></th>
@@ -55,9 +52,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.City.Name)
             </td>
             <td>
                 <a class="nav-link text-dark" asp-area="" asp-controller="Points" asp-action="GetThisMap" asp-route-id="@item.Id">Point</a>

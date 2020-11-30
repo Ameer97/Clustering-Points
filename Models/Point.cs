@@ -15,9 +15,6 @@ namespace Clustering.Models
         [ForeignKey(nameof(TypeId))]
         public Type Type { get; set; }
         public string Name { get; set; }
-        public int CityId { get; set; }
-        [ForeignKey(nameof(CityId))]
-        public City City { get; set; }
         public Geometry Geom { get; set; }
     }
 }

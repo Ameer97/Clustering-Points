@@ -19,8 +19,6 @@
     .my-custom-icon {
         width: 24px !important;
         height: 24px !important;
-        margin-left: -12px;
-        margin-top: -12px;
         border-radius: 18px;
         border: 2px solid #3F51B5;
         text-align: center;
@@ -28,25 +26,57 @@
         background-color: #fff;
         font-size: 16px;
     }
+
+    .rad{
+        border-radius:10px;
+        background-color:#bcc7dd;
+        color:black;
+        border:0px;
+    }
 </style>
 <div class="row">
     <div class="col-7">
         <div id="map"></div>
     </div>
     <div class="col-5">
-        <form asp-action="GetClusteringMap" method="post">
+        @*<form asp-action="Create">
             <div class="form-group">
-                <label asp-for="Types" class="control-label"></label>
-                <select asp-for="Types" class="form-control" asp-items="Model.Types"></select>
+                <label class="control-label"></label>
+                <select class="form-control" asp-items="ViewBag.TypeId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="Cities" class="control-label"></label>
-                <select asp-for="Cities" class="form-control" asp-items="Model.Cities"></select>
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>*@
+        @*<form asp-action="GetClusteringMap" method="post">
+            <div class="form-group">
+                <label asp-for="Types" class="control-label"></label>
+                <select asp-for="Types" class="form-control" asp-items="Model.Types" multiple></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="View In Map" class="btn btn-primary" />
             </div>
-        </form>
+        </form>*@
+            <h4>Clustering Algorithim</h4>
+            <div class="row mt-1 justify-content-center">
+                <div class="col-8 mt-4">
+                    <a class="btn btn-primary rad" asp-area="" asp-controller="Points" asp-action="GetClusteringMap">K Means</a>
+                </div>
+
+                <div class="col-8 mt-4">
+                    <a class="btn btn-primary rad" asp-area="" asp-controller="Points" asp-action="GetClusteringMapOptics">OPTICS</a>
+                </div>
+
+                <div class="col-8 mt-4">
+                    <a class="btn btn-primary rad" asp-area="" asp-controller="Points" asp-action="GetClusteringMapK_Medoidos">K Medoids</a>
+                </div>
+
+                <div class="col-8 mt-4">
+                    <a class="btn btn-primary rad" asp-area="" asp-controller="Points" asp-action="GetClusteringMapDbScan">Db Scan</a>
+                </div>
+            </div>
+
+
     </div>
 </div>
 
@@ -61,7 +91,8 @@
             {
                 id = point.Id,
                 lat = point.Lat,
-                lan = point.Lan
+                lan = point.Lan,
+                name = point.Name,
             })
         )
     );
@@ -76,13 +107,13 @@
 
         for (var i = 0; i < planes.length; i++) {
             var a = planes[i];
-            var title = a.id;
+            var title = a.name;
             var marker = L.marker(new L.LatLng(a.lat, a.lan), {
-                title: title,
-                icon: L.divIcon({
-                    className: 'my-custom-icon',
-                    html: i
-                })
+                title: title
+                //icon: L.divIcon({
+                //    className: 'my-custom-icon',
+                //    html: i
+                //})
             });
             marker.bindPopup(title);
             markers.addLayer(marker);

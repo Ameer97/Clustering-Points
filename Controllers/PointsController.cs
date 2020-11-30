@@ -17,12 +17,15 @@ namespace Clustering.Controllers
         public PointsController(ApplicationDbContext context)
         {
             _context = context;
+            //var t = _context.Points.Where(p => p.Id >= 1).ToList();
+            //_context.RemoveRange(t);
+            //_context.SaveChanges();
         }
 
         // GET: Points
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Points.Include(p => p.City).Include(p => p.Type);
+            var applicationDbContext = _context.Points.Include(p => p.Type);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -35,7 +38,6 @@ namespace Clustering.Controllers
             }
 
             var point = await _context.Points
-                .Include(p => p.City)
                 .Include(p => p.Type)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (point == null)
@@ -67,7 +69,7 @@ namespace Clustering.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CityId"] = new SelectList(_context.Cities, "Id", "Id", point.CityId);
+            //ViewData["CityId"] = new SelectList(_context.Cities, "Id", "Id", point.CityId);
             ViewData["TypeId"] = new SelectList(_context.Types, "Id", "Id", point.TypeId);
             return View(point);
         }
@@ -85,7 +87,7 @@ namespace Clustering.Controllers
             {
                 return NotFound();
             }
-            ViewData["CityId"] = new SelectList(_context.Cities, "Id", "Name", point.CityId);
+            //ViewData["CityId"] = new SelectList(_context.Cities, "Id", "Name", point.CityId);
             ViewData["TypeId"] = new SelectList(_context.Types, "Id", "Name", point.TypeId);
             return View(point);
         }
@@ -122,7 +124,7 @@ namespace Clustering.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CityId"] = new SelectList(_context.Cities, "Id", "Id", point.CityId);
+            //ViewData["CityId"] = new SelectList(_context.Cities, "Id", "Id", point.CityId);
             ViewData["TypeId"] = new SelectList(_context.Types, "Id", "Id", point.TypeId);
             return View(point);
         }
@@ -136,7 +138,7 @@ namespace Clustering.Controllers
             }
 
             var point = await _context.Points
-                .Include(p => p.City)
+                //.Include(p => p.City)
                 .Include(p => p.Type)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (point == null)
@@ -173,7 +175,32 @@ namespace Clustering.Controllers
         public async Task<IActionResult> GetClusteringMap()
         {
             var Object = await ForGetClusteringMap(new TypesCities { });
+            ViewData["Data"] = Object;
             return View(Object);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetClusteringMapDbScan()
+        {
+            var dbScan = new TypesCities();
+            dbScan.Points = _context.Points.Where(p => p.Id % 3 == 0).ToList();
+            return View("GetClusteringMap", dbScan);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetClusteringMapK_Medoidos()
+        {
+            var dbScan = new TypesCities();
+            dbScan.Points = _context.Points.Where(p => p.Id % 3 == 1).ToList();
+            return View("GetClusteringMap", dbScan);
+        }
+
+
+        public async Task<IActionResult> GetClusteringMapOptics()
+        {
+            var dbScan = new TypesCities();
+            dbScan.Points = _context.Points.Where(p => p.Id % 3 == 2).ToList();
+            return View("GetClusteringMap", dbScan);
         }
 
         [HttpPost]
@@ -191,14 +218,15 @@ namespace Clustering.Controllers
 
         private async Task<TypesCities> ForGetClusteringMap(TypesCities input)
         {
-            var points = await _context.Points.Include(p => p.Type).Include(p => p.City)
-                .Where(p => input.Types == null || !input.Types.Any() || input.Types.Select(t => t.Value).Contains(p.TypeId.ToString()))
+            var points = await _context.Points.Include(p => p.Type)
+                //.Include(p => p.City)
+                .Where(p => input.Types == null || !input.Types.Any())
                 .Where(p => input.Cities == null || input.Cities.Select(c => c.Value).Contains(p.TypeId.ToString()))
                 .ToListAsync();
             return new TypesCities
             {
                 Points = points,
-                Types = new SelectList(_context.Types, "Id", "Name"),
+                Types = input.Types,
                 Cities = new SelectList(_context.Cities, "Id", "Name")
             };
         }
