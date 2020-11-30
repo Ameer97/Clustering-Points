@@ -17,9 +17,6 @@ namespace Clustering.Controllers
         public PointsController(ApplicationDbContext context)
         {
             _context = context;
-            //var t = _context.Points.Where(p => p.Id >= 1).ToList();
-            //_context.RemoveRange(t);
-            //_context.SaveChanges();
         }
 
         // GET: Points

@@ -27,7 +27,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Report</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Report</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Contact</a>
@@ -41,12 +41,9 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Points" asp-action="">Point</a>
                             </li>
 
-                            if (User.IsInRole("Storage"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" href="https://data.humdata.org">HDX Platform</a>
-                                </li>
-                            }
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="https://data.humdata.org">HDX Platform</a>
+                            </li>
 
                         }
 
