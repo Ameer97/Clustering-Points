@@ -6,7 +6,8 @@
 
 @if (SignInManager.IsSignedIn(User) && User.IsInRole("Clustering"))
 {
-    <img src="/pictures/homePictuers.jpg" alt="HomePicture" />
+
+    <img class="mt-5" src="/pictures/homePictuers.jpg" alt="HomePicture" />
 }
 else if (SignInManager.IsSignedIn(User) && User.IsInRole("Storage"))
 {
