@@ -17,14 +17,75 @@
         height: 490px;
     }
     .my-custom-icon {
-        width: 24px !important;
-        height: 24px !important;
+        width: 30px !important;
+        height: 30px !important;
         border-radius: 18px;
         border: 2px solid #3F51B5;
-        text-align: center;
-        color: #3F51B5;
-        background-color: #fff;
-        font-size: 16px;
+        background: url(https://icons-for-free.com/iconfiles/png/512/cross+hospital+icon-1320185103418112438.png);
+        background-size: 100% 100%;
+    }
+
+    .hospital {
+        width: 30px !important;
+        height: 30px !important;
+        border-radius: 18px;
+        border: 2px solid #3F51B5;
+        background: url(https://icons-for-free.com/iconfiles/png/512/cross+hospital+icon-1320185103418112438.png);
+        background-size: 100% 100%;
+    }
+
+    .pharmacy {
+        width: 30px !important;
+        height: 30px !important;
+        border-radius: 18px;
+        border: 2px solid #3F51B5;
+        background: url(https://image.flaticon.com/icons/png/512/64/64176.png);
+        background-size: 100% 100%;
+    }
+
+    .clinic {
+        width: 30px !important;
+        height: 30px !important;
+        border-radius: 18px;
+        border: 2px solid #3F51B5;
+        background: url(https://as1.ftcdn.net/jpg/02/12/43/06/500_F_212430672_xINmYONWJ4BnJ9yoHThc0ZBJM3ozaK1O.jpg);
+        background-size: 100% 100%;
+    }
+
+    .danger {
+        width: 30px !important;
+        height: 30px !important;
+        border-radius: 18px;
+        border: 2px solid #3F51B5;
+        background: url(https://png.pngtree.com/element_our/20200702/ourlarge/pngtree-danger-icon-design-cartoon-image_2292393.jpg);
+        background-size: 100% 100%;
+    }
+
+    .dentist {
+        width: 30px !important;
+        height: 30px !important;
+        border-radius: 18px;
+        border: 2px solid #3F51B5;
+        background: url(https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX24129348.jpg);
+        background-size: 100% 100%;
+    }
+
+    .heath {
+        width: 30px !important;
+        height: 30px !important;
+        border-radius: 18px;
+        border: 2px solid #3F51B5;
+        background: url(https://conceptdraw.com/a155c4/p97/preview/640/pict--health-monitoring-cloud-round-icons-vector-stencils-library);
+        background-size: 100% 100%;
+    }
+
+    .doctors {
+        width: 30px !important;
+        height: 30px !important;
+        border-radius: 18px;
+        border: 2px solid #3F51B5;
+        background: url(https://cdn1.iconfinder.com/data/icons/avatar-3/512/Doctor-512.png);
+        background-size: 100% 100%;
     }
 
     .rad{
@@ -93,6 +154,7 @@
                 lat = point.Lat,
                 lan = point.Lan,
                 name = point.Name,
+                type = point.Type.Id
             })
         )
     );
@@ -109,56 +171,30 @@
             var a = planes[i];
             var title = a.name;
             var marker = L.marker(new L.LatLng(a.lat, a.lan), {
-                title: title
-                //icon: L.divIcon({
-                //    className: 'my-custom-icon',
-                //    html: i
-                //})
+                title: title,
+                icon: L.divIcon({
+                    className: icon(a)
+                })
             });
             marker.bindPopup(title);
             markers.addLayer(marker);
         }
 
+        function icon(point) {
+            switch (point.type) {
+                case 1: return 'heath'; 
+                case 2: return 'pharmacy'; 
+                case 3: return 'doctors'; 
+                case 4: return 'dentist'; 
+                case 5: return 'clinic'; 
+                case 6: return 'hospital'; 
+                case 7: return 'heath'; 
+                case 8: return 'danger'; 
+                default: return 'my-custom-icon'
+            }
+        }
+
         map.addLayer(markers);
-
-        //var addressPoints = [
-        //    [-37.8210922667, 175.2209316333, "2"],
-        //    [-37.8210819833, 175.2213903167, "3"],
-        //    [-37.8210881833, 175.2215004833, "3A"],
-        //    [-37.8211946833, 175.2213655333, "1"],
-        //    [-37.8209458667, 175.2214051333, "5"],
-        //    [-37.8208292333, 175.2214374833, "7"],
-        //    [-37.8325816, 175.2238798667, "537"],
-        //    [-37.8315855167, 175.2279767, "454"],
-        //    [-37.8096336833, 175.2223743833, "176"],
-        //    [-37.80970685, 175.2221815833, "178"],
-        //    [-37.8102146667, 175.2211562833, "190"],
-        //    [-37.8088037167, 175.2242227, "156"],
-        //    [-37.8112330167, 175.2193425667, "210"],
-        //    [-37.8116368667, 175.2193005167, "212"],
-        //    [-37.80812645, 175.2255449333, "146"],
-        //    [-37.8080231333, 175.2286383167, "125"],
-        //    [-37.8089538667, 175.2222222333, "174"],
-        //    [-37.8080905833, 175.2275400667, "129"]
-        //]
-
-        //var map = L.map('map').setView([-37.82, 175.23], 13);
-
-        //L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
-
-        //var markers = L.markerClusterGroup();
-
-        //for (var i = 0; i < addressPoints.length; i++) {
-        //    var a = addressPoints[i];
-        //    var title = a[2];
-        //    var marker = L.marker(new L.LatLng(a[0], a[1]), {
-        //        title: title
-        //    });
-        //    marker.bindPopup(title);
-        //    markers.addLayer(marker);
-        //}
-
-        //map.addLayer(markers);
     </script>
 }
 

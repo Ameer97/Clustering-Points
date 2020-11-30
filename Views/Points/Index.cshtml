@@ -21,13 +21,7 @@
                 @Html.DisplayNameFor(model => model.Lan)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Type)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Geom)
@@ -45,13 +39,7 @@
                 @Html.DisplayFor(modelItem => item.Lan)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Type.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
                 <a class="nav-link text-dark" asp-area="" asp-controller="Points" asp-action="GetThisMap" asp-route-id="@item.Id">Point</a>

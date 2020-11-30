@@ -25,7 +25,7 @@ namespace Clustering.Controllers
         // GET: Points
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Points.Include(p => p.Type);
+            var applicationDbContext = _context.Points.Take(200).Include(p => p.Type);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -175,7 +175,7 @@ namespace Clustering.Controllers
         public async Task<IActionResult> GetClusteringMap()
         {
             var dbScan = new TypesCities();
-            dbScan.Points = _context.Points.Where(p => p.Id % 4 != 0).ToList();
+            dbScan.Points = _context.Points.Where(p => p.Id % 4 != 0).Include(p => p.Type).ToList();
             return View(dbScan);
         }
 
@@ -183,7 +183,7 @@ namespace Clustering.Controllers
         public async Task<IActionResult> GetClusteringMapDbScan()
         {
             var dbScan = new TypesCities();
-            dbScan.Points = _context.Points.Where(p => p.Id % 4 != 1).ToList();
+            dbScan.Points = _context.Points.Where(p => p.Id % 4 != 1).Include(p => p.Type).ToList();
             return View("GetClusteringMap", dbScan);
         }
 
@@ -191,7 +191,7 @@ namespace Clustering.Controllers
         public async Task<IActionResult> GetClusteringMapK_Medoidos()
         {
             var dbScan = new TypesCities();
-            dbScan.Points = _context.Points.Where(p => p.Id % 4 != 2).ToList();
+            dbScan.Points = _context.Points.Where(p => p.Id % 4 != 2).Include(p => p.Type).ToList();
             return View("GetClusteringMap", dbScan);
         }
 
@@ -199,7 +199,7 @@ namespace Clustering.Controllers
         public async Task<IActionResult> GetClusteringMapOptics()
         {
             var dbScan = new TypesCities();
-            dbScan.Points = _context.Points.Where(p => p.Id % 4 != 3).ToList();
+            dbScan.Points = _context.Points.Where(p => p.Id % 4 != 3).Include(p => p.Type).ToList();
             return View("GetClusteringMap", dbScan);
         }
 

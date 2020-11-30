@@ -27,7 +27,10 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Report</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Contact</a>
                         </li>
                         @if (SignInManager.IsSignedIn(User))
                         {
@@ -35,11 +38,16 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Types" asp-action="">Type</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Cities" asp-action="">City</a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Points" asp-action="">Point</a>
                             </li>
+
+                            if (User.IsInRole("Storage"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" href="https://data.humdata.org">HDX Platform</a>
+                                </li>
+                            }
+
                         }
 
                     </ul>
