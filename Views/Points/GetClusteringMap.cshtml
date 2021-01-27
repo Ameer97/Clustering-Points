@@ -135,6 +135,10 @@
                 <div class="col-8 mt-4">
                     <a class="btn btn-primary rad" asp-area="" asp-controller="Points" asp-action="GetClusteringMapDbScan">&nbsp; Db Scan &nbsp;</a>
                 </div>
+
+                <div class="col-8 mt-4">
+                    <a class="btn btn-primary rad" onclick="addDiscussion()">&nbsp; Add Discussion &nbsp;</a>
+                </div>
             </div>
 
 
@@ -146,7 +150,25 @@
     <script src="https://unpkg.com/leaflet.markercluster@1.3.0/dist/leaflet.markercluster.js"></script>
     <script>
 
-        var planes = @Html.Raw(
+        @{ 
+            var grouped = Model.Points.GroupBy(p => p.ClusterGroup).ToList();
+        }
+        var clusters = @Html.Raw(Json.Serialize(grouped.Select(g => new
+           {
+               clusterGroup = g.Key,
+               points = Model.Points.Where(p => p.ClusterGroup == g.Key).Select(point => new
+               {
+                    id = point.Id,
+                    lat = point.Lat,
+                    lan = point.Lan,
+                    name = point.Name,
+                    type = point.TypeId,
+                    clusterGroup = point.ClusterGroup
+               })
+           })));
+        //console.log(y);
+
+        @*var planes = @Html.Raw(
         Json.Serialize(
             Model.Points.Select(point => new
             {
@@ -154,31 +176,68 @@
                 lat = point.Lat,
                 lan = point.Lan,
                 name = point.Name,
-                type = point.Type.Id
+                type = point.TypeId,
+                clusterGroup = point.ClusterGroup
             })
         )
-    );
+    );*@
+
+
 
         var map = L.map('map', {
             zoomControl: true, maxZoom: 28, minZoom: 1
         }).fitBounds([[29.799992708954807, 37.797432216381964], [36.99103453750632, 49.97967038565338]]);
 
-        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);        
 
-        var markers = L.markerClusterGroup();
+        clusters.forEach(function (cluster) {
 
-        for (var i = 0; i < planes.length; i++) {
-            var a = planes[i];
-            var title = a.name;
-            var marker = L.marker(new L.LatLng(a.lat, a.lan), {
-                title: title,
-                icon: L.divIcon({
-                    className: icon(a)
-                })
-            });
-            marker.bindPopup(title);
-            markers.addLayer(marker);
-        }
+            var markers = L.markerClusterGroup();
+            cluster.points.forEach(function (point) {
+                var marker = L.marker(new L.latLng(point.lat, point.lan), {
+                    title: point.name,
+                    icon: L.divIcon({
+                        className: icon(point)
+                    })
+                });
+                marker.bindPopup(point.name);
+                markers.addLayer(marker);
+            })
+            map.addLayer(markers);
+
+        });
+
+
+        //for (var i = 0; i < planes.length; i++) {
+        //    var a = planes[i];
+        //    var title = a.name;
+        //    var marker = L.marker(new L.LatLng(a.lat, a.lan), {
+        //        title: title,
+        //        icon: L.divIcon({
+        //            className: icon(a)
+        //        })
+        //    });
+        //    marker.bindPopup(title);
+        //    markers.addLayer(marker);
+        //}
+
+        //var markers2 = L.markerClusterGroup();
+
+        //for (var i = 0; i < planes.length; i++) {
+        //    var a2 = planes[i];
+        //    var title2 = a2.name;
+        //    var marker2 = L.marker(new L.LatLng(a2.lat + Math.floor(Math.random() * 10), a2.lan + Math.floor(Math.random() * 10)), {
+        //        title: title2,
+        //        icon: L.divIcon({
+        //            className: icon(a2)
+        //        })
+        //    });
+        //    marker2.bindPopup(title2);
+        //    markers2.addLayer(marker2);
+        //}
+        //map.addLayer(markers2);
+
+        //map.addLayer(markers);
 
         function icon(point) {
             switch (point.type) {
@@ -194,7 +253,15 @@
             }
         }
 
-        map.addLayer(markers);
+        function addDiscussion() {
+            L.polygon([
+                [51.509, -0.08],
+                [51.503, -0.06],
+                [51.51, -0.047]
+            ]).addTo(map);
+        }
+
+        
     </script>
 }
 

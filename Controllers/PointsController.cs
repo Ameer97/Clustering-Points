@@ -171,16 +171,26 @@ namespace Clustering.Controllers
         [HttpGet]
         public async Task<IActionResult> GetClusteringMap()
         {
-            var dbScan = new TypesCities();
-            dbScan.Points = _context.Points.Where(p => p.Id % 4 != 0).Include(p => p.Type).ToList();
-            return View(dbScan);
+            var KMeansQuery = "WITH js as ( select \"Id\",\"Lat\",\"Lan\",\"Name\", \"Description\", \"TypeId\", \"Geom\", ST_ClusterKMeans(\"Geom\",5) over () AS ClusterGroup FROM public.\"Points\") select * from js";
+            var KMeansNew = await _context.Points.FromSqlRaw(KMeansQuery).ToListAsync();
+
+            var maxClusterNumber = KMeansNew.Select(p => p.ClusterGroup).Max() + 1;
+            KMeansNew.Where(p => p.ClusterGroup == null).ToList().ForEach(p => p.ClusterGroup = maxClusterNumber);
+            var KMeans = new TypesCities();
+            KMeans.Points = _context.Points.Where(p => p.Id % 4 != 0).ToList();
+            return View(KMeans);
         }
 
         [HttpGet]
         public async Task<IActionResult> GetClusteringMapDbScan()
         {
+            var DbScanQuery = "with js as (SELECT \"Id\",\"Lat\",\"Lan\",\"Name\", \"Description\", \"TypeId\" , \"Geom\", ST_ClusterDBSCAN(\"Geom\", eps := 0.5, minpoints := 3) over () AS ClusterGroup FROM public.\"Points\") select * from js";
+            var dbscanNew = await _context.Points.FromSqlRaw(DbScanQuery).ToListAsync();
+
+            var maxClusterNumber = dbscanNew.Select(p => p.ClusterGroup).Max() + 1;
+            dbscanNew.Where(p => p.ClusterGroup == null).ToList().ForEach(p => p.ClusterGroup = maxClusterNumber);
             var dbScan = new TypesCities();
-            dbScan.Points = _context.Points.Where(p => p.Id % 4 != 1).Include(p => p.Type).ToList();
+            dbScan.Points = dbscanNew;
             return View("GetClusteringMap", dbScan);
         }
 
@@ -188,7 +198,7 @@ namespace Clustering.Controllers
         public async Task<IActionResult> GetClusteringMapK_Medoidos()
         {
             var dbScan = new TypesCities();
-            dbScan.Points = _context.Points.Where(p => p.Id % 4 != 2).Include(p => p.Type).ToList();
+            dbScan.Points = _context.Points.Where(p => p.Id % 4 != 2).ToList();
             return View("GetClusteringMap", dbScan);
         }
 
@@ -196,7 +206,7 @@ namespace Clustering.Controllers
         public async Task<IActionResult> GetClusteringMapOptics()
         {
             var dbScan = new TypesCities();
-            dbScan.Points = _context.Points.Where(p => p.Id % 4 != 3).Include(p => p.Type).ToList();
+            dbScan.Points = _context.Points.Where(p => p.Id % 4 != 3).ToList();
             return View("GetClusteringMap", dbScan);
         }
 
@@ -212,6 +222,12 @@ namespace Clustering.Controllers
             var points = await _context.Points.Where(p => p.Id == id).ToListAsync();
             return View("GetMap", points);
         }
+
+        //public async Task<IActionResult> GetJson()
+        //{
+        //    var points = await _context.Points.Take(20).Select(p => p.Lan).ToListAsync();
+        //    return Json(points);
+        //}
 
         private async Task<TypesCities> ForGetClusteringMap(TypesCities input)
         {
