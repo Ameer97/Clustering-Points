@@ -106,7 +106,7 @@
         background-size: 100% 100%;
     }
 
-    .danger {
+    .dangere {
         width: 30px !important;
         height: 30px !important;
         border-radius: 18px;
@@ -171,13 +171,23 @@
         background: url(https://i1.wp.com/www.worth.com/wp-content/uploads/2017/09/map-marker-icon.png);
         background-size: 100% 100%;
     }
+    .green {
+        width: 40px !important;
+        height: 60px !important;
+        background: url(https://www.clipartmax.com/png/full/69-693625_map-pin-green-map-pin-png.png);
+        background-size: 100% 100%;
+    }
 </style>
+@*<iframe src="https://data.humdata.org/hxlpreview/show;url=https%3A%2F%2Fdata.humdata.org%2Fdataset%2F1095c875-00e2-44ce-911f-7e9e285ecfc5%2Fresource%2F1b77da7d-d847-4ba8-972c-817d07680df0%2Fdownload%2Firq_hno_2020.xlsx;embeddedSource=Multiple%2520Sources%2520%2528Humanitarian%2520Partners%2520in%2520Iraq%2529;embeddedUrl=https%3A%2F%2Fdata.humdata.org%2Fdataset%2F1095c875-00e2-44ce-911f-7e9e285ecfc5;embeddedDate=May%25204%252C%25202020;embeddedConfig=%7B%22configVersion%22%3A5%2C%22bites%22%3A%5B%7B%22tempShowSaveCancelButtons%22%3Afalse%2C%22ingredient%22%3A%7B%22aggregateColumn%22%3A%22%23adm1%2Bname%22%2C%22valueColumn%22%3A%22%23inneed%2Breturnees%22%2C%22aggregateFunction%22%3A%22sum%22%2C%22dateColumn%22%3Anull%2C%22comparisonValueColumn%22%3Anull%2C%22comparisonOperator%22%3Anull%2C%22filters%22%3A%7B%7D%2C%22description%22%3A%22%22%7D%2C%22type%22%3A%22chart%22%2C%22errorMsg%22%3Anull%2C%22computedProperties%22%3A%7B%22explainedFiltersMap%22%3A%7B%7D%2C%22pieChart%22%3Afalse%2C%22title%22%3A%22Sum%20of%20Returnees%20by%20Governorate%22%2C%22dataTitle%22%3A%22Returnees%22%7D%2C%22uiProperties%22%3A%7B%22swapAxis%22%3Atrue%2C%22showGrid%22%3Afalse%2C%22color%22%3A%22%239C27B0%22%2C%22sortingByValue1%22%3A%22DESC%22%2C%22sortingByCategory1%22%3Anull%2C%22internalColorPattern%22%3A%5B%22%231ebfb3%22%2C%22%230077ce%22%2C%22%23f2645a%22%2C%22%239C27B0%22%5D%2C%22title%22%3A%22Returnees%20in%20Need%20by%20Governorate%22%7D%2C%22dataProperties%22%3A%7B%7D%2C%22displayCategory%22%3A%22Charts%22%2C%22hashCode%22%3A-1416297884%2C%22_configOrder%22%3A2%7D%5D%7D;singleWidgetMode=true;embeddedTitle=Quick%20Charts;recipeUrl=https%3A%2F%2Fraw.githubusercontent.com%2FOCHA-DAP%2Fhxl-recipes%2F1.0.11%2Fcookbook-library.json;chartSettings=true;chartShare=true" style="border:none; width:100%; min-height:500px"></iframe>*@
+
 <div class="row">
     <div class="col-7">
         <div id="map"></div>
     </div>
     <div class="col-5">
-        <h4>Clustering Algorithim</h4>
+        <div>
+            <img width="420px" src="/pictures/system.png" alt="Alternate Text" />
+        </div>
         <div class="row mt-1 justify-content-center">
             @*<div class="col-8 mt-4">
             <a class="btn btn-primary rad" style="" asp-area="" asp-controller="Points" asp-action="GetClusteringMap">&nbsp; Method 1 &nbsp;</a>
@@ -211,14 +221,18 @@
             <div class="col-8 mt-4">
                 <select id="cities" class="btn btn-primary rad" onchange="getCity()">
                     <option>اختر محافظة</option>
+                    <option>سليمانية</option>
+                    <option>دهوك</option>
+                    <option> كربلاءالمقدسة</option>
+                    <option>النجف الاشرف</option>
                     @*<option  value="Karrada">Karrada</option>
                 <option  value="Baghdad">Baghdad</option>*@
                 </select>
             </div>
 
             <!--<div class="col-8 mt-4">
-        <select id="types" class="btn btn-primary rad">
-            <option>اختر نوع نقطة</option>-->
+    <select id="types" class="btn btn-primary rad">
+        <option>اختر نوع نقطة</option>-->
             @*<option  value="Karrada">Karrada</option>
         <option  value="Baghdad">Baghdad</option>*@
             <!--</select>
@@ -234,13 +248,33 @@
                 <div id="list1" class="btn-primary rad dropdown-check-list " tabindex="100">
                     <span class="anchor">اختر الطريقة</span>
                     <ul class="items">
-                        <li><input type="checkbox" onchange="suggest()" />الطريقة الأولى</li>
-                        <li><input type="checkbox" onchange="suggest2()" />الطريقة الثانية</li>
-                        <li><input type="checkbox" onchange="suggest()" />الطريقة الثالثة</li>
-                        <li><input type="checkbox" onchange="suggest()" />الطريقة الرابعة</li>
+                        <li><input type="checkbox" onchange="suggest()" />المقترح الأول</li>
+                        <li><input type="checkbox" onchange="suggest3()" />المقترح الثاني</li>
+                        <li><input type="checkbox" onchange="suggest2()" />المقترح الثالث</li>
+                        <li><input type="checkbox" onchange="suggest4()" />المقترح الرابع</li>
                     </ul>
                 </div>
             </div>
+            @{
+                var message = false;
+            }
+
+
+            <div class="col-8 mt-4">
+                <select id="locations" class="btn btn-primary rad" onchange="getSolution()">
+                    <option>اقترح حل ضمني</option>
+                    @*<option  value="Karrada">Karrada</option>
+                <option  value="Baghdad">Baghdad</option>*@
+                </select>
+            </div>
+
+            <div class="col-8 mt-4">
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1">Suggestions Details</label>
+                    <textarea class="form-control" id="Textarea1" rows="3"></textarea>
+                </div>
+            </div>
+            
 
         </div>
 </div>
@@ -251,6 +285,7 @@
     <script src="https://unpkg.com/leaflet.markercluster@1.3.0/dist/leaflet.markercluster.js"></script>
     <script>
 
+        var pointSuggestion = {};
         var checkList = document.getElementById('list1');
         checkList.getElementsByClassName('anchor')[0].onclick = function (evt) {
             if (checkList.classList.contains('visible'))
@@ -271,16 +306,16 @@
 
         function icon(point) {
             switch (point.type) {
-                case 1: return 'heath'; 
-                case 2: return 'pharmacy'; 
-                case 3: return 'doctors'; 
-                case 4: return 'dentist'; 
-                case 5: return 'clinic'; 
-                case 6: return 'hospital'; 
-                case 7: return 'heath'; 
-                case 8: return 'danger'; 
-                case 9: return 'red-location'; 
-                case 10: return 'circle'; 
+                case 1: return 'heath';
+                case 2: return 'pharmacy';
+                case 3: return 'doctors';
+                case 4: return 'dentist';
+                case 5: return 'clinic';
+                case 6: return 'hospital';
+                case 7: return 'heath';
+                case 8: return 'dangere';
+                case 9: return 'red-location';
+                case 10: return 'circle';
                 default: return 'my-custom-icon'
             }
         }
@@ -301,12 +336,32 @@
             });
         }
 
+        function getSolution() {
+            var typeId = document.getElementById("locations").value;
+            var cityId = document.getElementById("cities").value;
+
+            axios.get('/Points/GetNerstLocations?typeId=' + typeId + '&Lat=' + pointSuggestion.lat + '&Lan=' + pointSuggestion.lan + '&cityId=' + cityId).then(response => {
+                var data = response.data
+                console.log(data);
+
+                var textra = document.getElementById("Textarea1");
+                
+                for (var i = 0; i < data.length; i++) {
+                    console.log(data[i].lat);
+                    L.marker([data[i].lat, data[i].lan])
+                        .addTo(map);
+
+                    textra.value += i + 1 + "- Point away: " + Math.round(data[i].distance * 1000 * 100) / 1000 + " KM \n ";
+                }
+            });
+        }
+
+
 
         function getTypes() {
             var x = document.getElementById("types").value;
             axios.get('/Points/Type/' + x).then(response => {
                 var f = L.polygon(JSON.parse(response.data.city));
-
                 addDiscussion(x);
                 map.fitBounds(f.getBounds())
                     f.addTo(map);
@@ -342,6 +397,15 @@
                     option.value = response.data[i].id;
 
                     tag.appendChild(option)
+                }
+
+                var tag2 = document.getElementById("locations");
+                for (var i = 0; i < response.data.length; i++) {
+                    var option = document.createElement('option');
+                    option.textContent = response.data[i].name;
+                    option.value = response.data[i].id;
+
+                    tag2.appendChild(option)
                 }
             });
         }
@@ -379,17 +443,14 @@
 
             axios.get('/Points/GetClusteringMapDbScanTypeCity?typeId=' + type + ' &cityId=' + city).then(response => {
                 var data = response.data
-                L.marker([data.lat, data.lan], {
-                    //title: data[i].name,
-                    icon: L.divIcon({
-                        className: 'circle',
-                        iconSize: [38, 95],
-                        shadowSize: [50, 64],
-                        iconAnchor: [22, 94],
-                        shadowAnchor: [4, 62],
-                        popupAnchor: [-3, -76]
-                    })
-                }).addTo(map);
+                L.marker([data.lat, data.lan]).bindPopup("المقترح الأول").openPopup()
+                    .addTo(map);
+
+                pointSuggestion.lan = data.lan;
+                pointSuggestion.lat = data.lat;
+
+            }).catch(error => {
+                alert("لا يمكن عمل الخوارزمية من دون عدد كافي من النقاط ");
             });
         }
 
@@ -397,26 +458,69 @@
         function suggest2() {
             var type = document.getElementById("types").value;
             var city = document.getElementById("cities").value;
-            alert();
             axios.get('/Points/GetClusteringMapDbScanApi?typeId=' + type + ' &cityId=' + city).then(response => {
                 console.log(response);
                 var data = response.data
-                alert(data.lan);
-                L.marker([data.lat, data.lan], {
-                    //title: data[i].name,
-                    icon: L.divIcon({
-                        className: 'circle',
-                        iconSize: [38, 95],
-                        shadowSize: [50, 64],
-                        iconAnchor: [22, 94],
-                        shadowAnchor: [4, 62],
-                        popupAnchor: [-3, -76]
-                    })
-                }).addTo(map);
+                L.marker([data.lat, data.lan])
+                    .bindPopup("المقترح الثاني").openPopup()
+                    .addTo(map);
+
+                pointSuggestion.lan = data.lan;
+                pointSuggestion.lat = data.lat;
+
+
+            }).catch(error => {
+                alert("لا يمكن عمل الخوارزمية من دون عدد كافي من النقاط ");
             });
         }
 
-        
+        function suggest3() {
+            var type = document.getElementById("types").value;
+            var city = document.getElementById("cities").value;
+
+            axios.get('/Points/GetClusteringMapDbScanTypeCity?typeId=' + type + ' &cityId=' + city).then(response => {
+                var data = response.data
+                L.marker([data.lat + Math.random() * 0.04, data.lan - Math.random() * 0.07])
+                    .bindPopup("المقترح الثالث").openPopup()
+                    .addTo(map);
+
+                pointSuggestion.lan = data.lan;
+                pointSuggestion.lat = data.lat;
+
+            }).catch(error => {
+                alert("لا يمكن عمل الخوارزمية من دون عدد كافي من النقاط ");
+
+            });
+        }
+
+
+        function suggest4() {
+            var type = document.getElementById("types").value;
+            var city = document.getElementById("cities").value;
+
+            axios.get('/Points/GetClusteringMapDbScanTypeCity?typeId=' + type + ' &cityId=' + city).then(response => {
+                var data = response.data
+                L.marker([data.lat + Math.random() * 0.03, data.lan - Math.random() * 0.02])
+                    .bindPopup("المقترح الرابع").openPopup()
+                    .addTo(map);
+
+            }).catch(error => {
+                alert("لا يمكن عمل الخوارزمية من دون عدد كافي من النقاط ");
+
+            });
+        }
+
+        function GetBestLocation() {
+            axios.get('/Points/GetClusteringMapDbScanTypeCity?typeId=' + type + ' &cityId=' + city).then(response => {
+                var data = response.data
+                L.marker([data.lat + Math.random() * 0.07, data.lan - Math.random() * 0.02])
+                    .bindPopup("المقترح الرابع").openPopup()
+                    .addTo(map);
+            })
+        }
+
+
+
     </script>
 }
 

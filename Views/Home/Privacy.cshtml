@@ -2,120 +2,17 @@
     ViewData["Title"] = "Report";
 }
 <h1>@ViewData["Title"]</h1>
+<iframe src="https://data.humdata.org/hxlpreview/show;url=https%3A%2F%2Fdata.humdata.org%2Fdataset%2F1095c875-00e2-44ce-911f-7e9e285ecfc5%2Fresource%2F1b77da7d-d847-4ba8-972c-817d07680df0%2Fdownload%2Firq_hno_2020.xlsx;embeddedSource=Multiple%2520Sources%2520%2528Humanitarian%2520Partners%2520in%2520Iraq%2529;embeddedUrl=https%3A%2F%2Fdata.humdata.org%2Fdataset%2F1095c875-00e2-44ce-911f-7e9e285ecfc5;embeddedDate=May%25204%252C%25202020;embeddedConfig=%7B%22configVersion%22%3A5%2C%22bites%22%3A%5B%7B%22tempShowSaveCancelButtons%22%3Afalse%2C%22ingredient%22%3A%7B%22aggregateColumn%22%3A%22%23adm1%2Bname%22%2C%22valueColumn%22%3A%22%23inneed%2Breturnees%22%2C%22aggregateFunction%22%3A%22sum%22%2C%22dateColumn%22%3Anull%2C%22comparisonValueColumn%22%3Anull%2C%22comparisonOperator%22%3Anull%2C%22filters%22%3A%7B%7D%2C%22description%22%3A%22%22%7D%2C%22type%22%3A%22chart%22%2C%22errorMsg%22%3Anull%2C%22computedProperties%22%3A%7B%22explainedFiltersMap%22%3A%7B%7D%2C%22pieChart%22%3Afalse%2C%22title%22%3A%22Sum%20of%20Returnees%20by%20Governorate%22%2C%22dataTitle%22%3A%22Returnees%22%7D%2C%22uiProperties%22%3A%7B%22swapAxis%22%3Atrue%2C%22showGrid%22%3Afalse%2C%22color%22%3A%22%231ebfb3%22%2C%22sortingByValue1%22%3A%22DESC%22%2C%22sortingByCategory1%22%3Anull%2C%22internalColorPattern%22%3A%5B%22%231ebfb3%22%2C%22%230077ce%22%2C%22%23f2645a%22%2C%22%239C27B0%22%5D%7D%2C%22dataProperties%22%3A%7B%7D%2C%22displayCategory%22%3A%22Charts%22%2C%22hashCode%22%3A-1416297884%7D%5D%7D;singleWidgetMode=true;embeddedTitle=Quick%20Charts;recipeUrl=https%3A%2F%2Fraw.githubusercontent.com%2FOCHA-DAP%2Fhxl-recipes%2F1.0.11%2Fcookbook-library.json;chartSettings=true;chartShare=true" style="border:none; width:100%; min-height:500px"></iframe>
 
-<style>
-    .img {
-        width: 109%;
-    }
-</style>
-<canvas class="mt-5" id="myChart"></canvas>
-<canvas class="mt-5" id="myChart2" width="400" height="400"></canvas>
-<canvas class="mt-5" id="myChart3" width="400" height="400"></canvas>
-<script class="mt-5" src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<iframe src="https://data.humdata.org/hxlpreview/show;url=https%3A%2F%2Fdata.humdata.org%2Fdataset%2F1095c875-00e2-44ce-911f-7e9e285ecfc5%2Fresource%2F1b77da7d-d847-4ba8-972c-817d07680df0%2Fdownload%2Firq_hno_2020.xlsx;embeddedSource=Multiple%2520Sources%2520%2528Humanitarian%2520Partners%2520in%2520Iraq%2529;embeddedUrl=https%3A%2F%2Fdata.humdata.org%2Fdataset%2F1095c875-00e2-44ce-911f-7e9e285ecfc5;embeddedDate=May%25204%252C%25202020;embeddedConfig=%7B%22configVersion%22%3A5%2C%22bites%22%3A%5B%7B%22tempShowSaveCancelButtons%22%3Afalse%2C%22ingredient%22%3A%7B%22aggregateColumn%22%3A%22%23adm1%2Bname%22%2C%22valueColumn%22%3A%22%23inneed%2Bidps%2Bin_camp%22%2C%22aggregateFunction%22%3A%22sum%22%2C%22dateColumn%22%3Anull%2C%22comparisonValueColumn%22%3Anull%2C%22comparisonOperator%22%3Anull%2C%22filters%22%3A%7B%7D%2C%22description%22%3A%22%22%7D%2C%22type%22%3A%22chart%22%2C%22errorMsg%22%3Anull%2C%22computedProperties%22%3A%7B%22explainedFiltersMap%22%3A%7B%7D%2C%22pieChart%22%3Afalse%2C%22title%22%3A%22Sum%20of%20IDPs%20In-Camp%20by%20Governorate%22%2C%22dataTitle%22%3A%22IDPs%20In-Camp%22%7D%2C%22uiProperties%22%3A%7B%22swapAxis%22%3Atrue%2C%22showGrid%22%3Afalse%2C%22color%22%3A%22%231ebfb3%22%2C%22sortingByValue1%22%3A%22DESC%22%2C%22sortingByCategory1%22%3Anull%2C%22internalColorPattern%22%3A%5B%22%231ebfb3%22%2C%22%230077ce%22%2C%22%23f2645a%22%2C%22%239C27B0%22%5D%2C%22title%22%3A%22IDPs%20in%20Need%20%28in-camp%29%20by%20Governorate%22%7D%2C%22dataProperties%22%3A%7B%7D%2C%22displayCategory%22%3A%22Charts%22%2C%22hashCode%22%3A-1364544987%2C%22_configOrder%22%3A0%7D%5D%7D;singleWidgetMode=true;embeddedTitle=Quick%20Charts;recipeUrl=https%3A%2F%2Fraw.githubusercontent.com%2FOCHA-DAP%2Fhxl-recipes%2F1.0.11%2Fcookbook-library.json;chartSettings=true;chartShare=true" style="border:none; width:100%; min-height:500px"></iframe>
 
-<script>
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var chart = new Chart(ctx, {
-        // The type of chart we want to create
-        type: 'line',
+<iframe src="https://data.humdata.org/hxlpreview/show;url=https%3A%2F%2Fdata.humdata.org%2Fdataset%2F1095c875-00e2-44ce-911f-7e9e285ecfc5%2Fresource%2F1b77da7d-d847-4ba8-972c-817d07680df0%2Fdownload%2Firq_hno_2020.xlsx;embeddedSource=Multiple%2520Sources%2520%2528Humanitarian%2520Partners%2520in%2520Iraq%2529;embeddedUrl=https%3A%2F%2Fdata.humdata.org%2Fdataset%2F1095c875-00e2-44ce-911f-7e9e285ecfc5;embeddedDate=May%25204%252C%25202020;embeddedConfig=%7B%22configVersion%22%3A5%2C%22bites%22%3A%5B%7B%22tempShowSaveCancelButtons%22%3Afalse%2C%22ingredient%22%3A%7B%22aggregateColumn%22%3A%22%23adm1%2Bname%22%2C%22valueColumn%22%3A%22%23inneed%2Breturnees%22%2C%22aggregateFunction%22%3A%22sum%22%2C%22dateColumn%22%3Anull%2C%22comparisonValueColumn%22%3Anull%2C%22comparisonOperator%22%3Anull%2C%22filters%22%3A%7B%7D%2C%22description%22%3A%22%22%7D%2C%22type%22%3A%22chart%22%2C%22errorMsg%22%3Anull%2C%22computedProperties%22%3A%7B%22explainedFiltersMap%22%3A%7B%7D%2C%22pieChart%22%3Afalse%2C%22title%22%3A%22Sum%20of%20Returnees%20by%20Governorate%22%2C%22dataTitle%22%3A%22Returnees%22%7D%2C%22uiProperties%22%3A%7B%22swapAxis%22%3Atrue%2C%22showGrid%22%3Afalse%2C%22color%22%3A%22%239C27B0%22%2C%22sortingByValue1%22%3A%22DESC%22%2C%22sortingByCategory1%22%3Anull%2C%22internalColorPattern%22%3A%5B%22%231ebfb3%22%2C%22%230077ce%22%2C%22%23f2645a%22%2C%22%239C27B0%22%5D%2C%22title%22%3A%22Returnees%20in%20Need%20by%20Governorate%22%7D%2C%22dataProperties%22%3A%7B%7D%2C%22displayCategory%22%3A%22Charts%22%2C%22hashCode%22%3A-1416297884%2C%22_configOrder%22%3A2%7D%5D%7D;singleWidgetMode=true;embeddedTitle=Quick%20Charts;recipeUrl=https%3A%2F%2Fraw.githubusercontent.com%2FOCHA-DAP%2Fhxl-recipes%2F1.0.11%2Fcookbook-library.json;chartSettings=true;chartShare=true" style="border:none; width:100%; min-height:500px"></iframe>
 
-        // The data for our dataset
-        data: {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-            datasets: [{
-                label: 'تقرير المرافق الصحية في العراق',
-                backgroundColor: 'rgb(255, 99, 132)',
-                borderColor: 'rgb(255, 99, 132)',
-                data: [0, 10, 5, 2, 20, 30, 45]
-            }]
-        },
+<iframe src="https://data.humdata.org/hxlpreview/show;url=https%3A%2F%2Fdocs.google.com%2Fspreadsheets%2Fd%2Fe%2F2PACX-1vQh_BwL222rdcpIH2rLPIbvdKLJu3fevAy2L82FHUcl-84w6byWRITQicetYzpqX707EUc3qgAJm7Hr%2Fpub%3Fgid%3D0%26single%3Dtrue%26output%3Dcsv;embeddedSource=WHO;embeddedUrl=https%3A%2F%2Fdata.humdata.org%2Fdataset%2F8d71592a-fb7d-4a0b-ad54-40095a076ea7;embeddedDate=January%25205%252C%25202021;embeddedConfig=%7B%22configVersion%22%3A5%2C%22bites%22%3A%5B%7B%22tempShowSaveCancelButtons%22%3Afalse%2C%22ingredient%22%3A%7B%22aggregateColumn%22%3A%22%23adm1%2Bname%22%2C%22valueColumn%22%3A%22%23affected%2Binfected%2Bconfirmed%22%2C%22aggregateFunction%22%3A%22sum%22%2C%22dateColumn%22%3Anull%2C%22comparisonValueColumn%22%3Anull%2C%22comparisonOperator%22%3Anull%2C%22filters%22%3A%7B%7D%2C%22description%22%3A%22%22%7D%2C%22type%22%3A%22chart%22%2C%22errorMsg%22%3Anull%2C%22computedProperties%22%3A%7B%22explainedFiltersMap%22%3A%7B%7D%2C%22pieChart%22%3Afalse%2C%22title%22%3A%22Sum%20of%20Cases%20by%20Governorate%22%2C%22dataTitle%22%3A%22Cases%22%7D%2C%22uiProperties%22%3A%7B%22swapAxis%22%3Atrue%2C%22showGrid%22%3Afalse%2C%22color%22%3A%22%23FFFF00%22%2C%22sortingByValue1%22%3A%22DESC%22%2C%22sortingByCategory1%22%3Anull%2C%22internalColorPattern%22%3A%5B%22%231ebfb3%22%2C%22%230077ce%22%2C%22%23f2645a%22%2C%22%239C27B0%22%5D%7D%2C%22dataProperties%22%3A%7B%7D%2C%22displayCategory%22%3A%22Charts%22%2C%22hashCode%22%3A-1791895834%2C%22_configOrder%22%3A0%7D%5D%7D;singleWidgetMode=true;embeddedTitle=Quick%20Charts;recipeUrl=https%3A%2F%2Fraw.githubusercontent.com%2FOCHA-DAP%2Fhxl-recipes%2F1.0.11%2Fcookbook-library.json;chartSettings=true;chartShare=true" style="border:none; width:100%; min-height:500px"></iframe>
 
-        // Configuration options go here
-        options: {}
-    });
+<iframe src="https://data.humdata.org/hxlpreview/show;url=https%3A%2F%2Fdocs.google.com%2Fspreadsheets%2Fd%2Fe%2F2PACX-1vQh_BwL222rdcpIH2rLPIbvdKLJu3fevAy2L82FHUcl-84w6byWRITQicetYzpqX707EUc3qgAJm7Hr%2Fpub%3Fgid%3D0%26single%3Dtrue%26output%3Dcsv;embeddedSource=WHO;embeddedUrl=https%3A%2F%2Fdata.humdata.org%2Fdataset%2F8d71592a-fb7d-4a0b-ad54-40095a076ea7;embeddedDate=January%25205%252C%25202021;embeddedConfig=%7B%22configVersion%22%3A5%2C%22bites%22%3A%5B%7B%22tempShowSaveCancelButtons%22%3Afalse%2C%22ingredient%22%3A%7B%22aggregateColumn%22%3A%22%23adm1%2Bname%22%2C%22valueColumn%22%3A%22%23affected%2Binfected%2Bdead%22%2C%22aggregateFunction%22%3A%22sum%22%2C%22dateColumn%22%3Anull%2C%22comparisonValueColumn%22%3Anull%2C%22comparisonOperator%22%3Anull%2C%22filters%22%3A%7B%7D%2C%22description%22%3A%22%22%7D%2C%22type%22%3A%22chart%22%2C%22errorMsg%22%3Anull%2C%22computedProperties%22%3A%7B%22explainedFiltersMap%22%3A%7B%7D%2C%22pieChart%22%3Afalse%2C%22title%22%3A%22Sum%20of%20Deaths%20by%20Governorate%22%2C%22dataTitle%22%3A%22Deaths%22%7D%2C%22uiProperties%22%3A%7B%22swapAxis%22%3Atrue%2C%22showGrid%22%3Atrue%2C%22color%22%3A%22%23f2645a%22%2C%22sortingByValue1%22%3A%22DESC%22%2C%22sortingByCategory1%22%3Anull%2C%22internalColorPattern%22%3A%5B%22%231ebfb3%22%2C%22%230077ce%22%2C%22%23f2645a%22%2C%22%239C27B0%22%5D%7D%2C%22dataProperties%22%3A%7B%7D%2C%22displayCategory%22%3A%22Charts%22%2C%22hashCode%22%3A1557622869%2C%22_configOrder%22%3A1%7D%5D%7D;singleWidgetMode=true;embeddedTitle=Quick%20Charts;recipeUrl=https%3A%2F%2Fraw.githubusercontent.com%2FOCHA-DAP%2Fhxl-recipes%2F1.0.11%2Fcookbook-library.json;chartSettings=true;chartShare=true" style="border:none; width:100%; min-height:500px"></iframe>
 
-</script>
+<iframe src="https://data.humdata.org/hxlpreview/show;url=https%3A%2F%2Fdocs.google.com%2Fspreadsheets%2Fd%2Fe%2F2PACX-1vQh_BwL222rdcpIH2rLPIbvdKLJu3fevAy2L82FHUcl-84w6byWRITQicetYzpqX707EUc3qgAJm7Hr%2Fpub%3Fgid%3D0%26single%3Dtrue%26output%3Dcsv;embeddedSource=WHO;embeddedUrl=https%3A%2F%2Fdata.humdata.org%2Fdataset%2F8d71592a-fb7d-4a0b-ad54-40095a076ea7;embeddedDate=January%25205%252C%25202021;embeddedConfig=%7B%22configVersion%22%3A5%2C%22bites%22%3A%5B%7B%22tempShowSaveCancelButtons%22%3Afalse%2C%22ingredient%22%3A%7B%22aggregateColumn%22%3A%22%23adm1%2Bname%22%2C%22valueColumn%22%3A%22%23affected%2Binfected%2Brecovered%22%2C%22aggregateFunction%22%3A%22sum%22%2C%22dateColumn%22%3Anull%2C%22comparisonValueColumn%22%3Anull%2C%22comparisonOperator%22%3Anull%2C%22filters%22%3A%7B%7D%2C%22description%22%3A%22%22%7D%2C%22type%22%3A%22chart%22%2C%22errorMsg%22%3Anull%2C%22computedProperties%22%3A%7B%22explainedFiltersMap%22%3A%7B%7D%2C%22pieChart%22%3Afalse%2C%22title%22%3A%22Sum%20of%20Recoveries%20by%20Governorate%22%2C%22dataTitle%22%3A%22Recoveries%22%7D%2C%22uiProperties%22%3A%7B%22swapAxis%22%3Atrue%2C%22showGrid%22%3Afalse%2C%22color%22%3A%22%231ebfb3%22%2C%22sortingByValue1%22%3A%22DESC%22%2C%22sortingByCategory1%22%3Anull%2C%22internalColorPattern%22%3A%5B%22%231ebfb3%22%2C%22%230077ce%22%2C%22%23f2645a%22%2C%22%239C27B0%22%5D%7D%2C%22dataProperties%22%3A%7B%7D%2C%22displayCategory%22%3A%22Charts%22%2C%22hashCode%22%3A733955978%2C%22_configOrder%22%3A2%7D%5D%7D;singleWidgetMode=true;embeddedTitle=Quick%20Charts;recipeUrl=https%3A%2F%2Fraw.githubusercontent.com%2FOCHA-DAP%2Fhxl-recipes%2F1.0.11%2Fcookbook-library.json;chartSettings=true;chartShare=true" style="border:none; width:100%; min-height:500px"></iframe>
 
-<script>
-    var ctx = document.getElementById('myChart2').getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-            datasets: [{
-                label: 'تقرير المحافظات الاكثر خطورة في العراق',
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
-        }
-    });
-</script>
 
-<script>
-    var ctx = document.getElementById('myChart3').getContext('2d');
-    // For a pie chart
-    var myChart = new Chart(ctx, {
-        type: 'polarArea',
-        data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-            datasets: [{
-                label: 'تقرير المستشفيات و الصيدليات و مراكز الاسنان في محافظة بغداد',
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
-        }
-    });
-</script>
-<img class="img" src="/pictures/Untitled-1.jpg" alt="HomePicture" />
-<img class="img" src="/pictures/tg_image_1033102803.jpeg" alt="HomePicture" />
-<img class="img" src="/pictures/tg_image_509463555.jpeg" alt="HomePicture" />
+

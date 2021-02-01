@@ -15,7 +15,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-            <th></th>
+            <th>
+                Actions
+            </th>
+            <th>
+                Points
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -29,6 +34,9 @@
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
+            <td>
+                <a asp-controller="Points" asp-action="GetThisMapForTypePoints" asp-route-id="@item.Id" >Show On Map</a>
+            </td>  
         </tr>
 }
     </tbody>

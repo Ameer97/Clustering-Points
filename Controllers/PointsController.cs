@@ -7,6 +7,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Protocols;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
@@ -216,7 +217,14 @@ namespace Clustering.Controllers
             {
                 while (rdr.Read())
                 {
-                    return Json(new { Lan = rdr.GetDouble(0), Lat = rdr.GetDouble(1) });              // Do somthing with this rows string, for example to put them in to a list
+                    try
+                    {
+                        return Json(new { Lan = rdr.GetDouble(0), Lat = rdr.GetDouble(1) });              // Do somthing with this rows string, for example to put them in to a list
+
+                    }
+                    catch
+                    {
+                    }
                 }
             }
 
@@ -239,7 +247,14 @@ namespace Clustering.Controllers
             {
                 while (rdr.Read())
                 {
-                    return Json(new { Lan = rdr.GetDouble(0) + 0.001 * r.NextDouble(), Lat = rdr.GetDouble(1) - 0.001 * r.NextDouble() });              // Do somthing with this rows string, for example to put them in to a list
+                    try
+                    {
+                        return Json(new { Lan = rdr.GetDouble(0) + 0.004 * r.NextDouble(), Lat = rdr.GetDouble(1) - 0.002 * r.NextDouble() });              // Do somthing with this rows string, for example to put them in to a list
+
+                    }
+                    catch
+                    {
+                    }
                 }
             }
 
@@ -255,6 +270,33 @@ namespace Clustering.Controllers
             var dbScan = new TypesCities();
             dbScan.Points = _context.Points.Where(p => p.Id % 4 != 2).ToList();
             return View("GetClusteringMap", dbScan);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetNerstLocations(double lat, double lan, int typeId, int cityId)
+        {
+            var g = "SELECT \"Lat\",\"Lan\", ST_Distance(\"Geom\", st_setsrid(ST_MakePoint(" + lan + ", " + lat + "), 4326)) as distance FROM public.\"Points\" where \"TypeId\" = " + typeId + " And ST_Contains((select \"Geom\" from public.\"Cities\" where \"Id\" = " + cityId + "),\"Geom\") order by distance limit 5;";
+
+            var command = _context.Database.GetDbConnection().CreateCommand();
+            command.CommandText = g;
+            _context.Database.OpenConnection();
+
+            var aPoint = new List<APoint>();
+            using (var rdr = command.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+                    try
+                    {
+                        aPoint.Add(new APoint { Lat = rdr.GetDouble(0), Lan = rdr.GetDouble(1), Distance = rdr.GetDouble(2) });
+                    }
+                    catch
+                    {
+                    }
+                }
+            }
+
+            return Json(aPoint);
         }
 
 
@@ -275,6 +317,12 @@ namespace Clustering.Controllers
         public async Task<IActionResult> GetThisMap(int id)
         {
             var points = await _context.Points.Where(p => p.Id == id).ToListAsync();
+            return View("GetMap", points);
+        }
+
+        public async Task<IActionResult> GetThisMapForTypePoints(int id)
+        {
+            var points = await _context.Points.Where(p => p.TypeId == id).ToListAsync();
             return View("GetMap", points);
         }
 
