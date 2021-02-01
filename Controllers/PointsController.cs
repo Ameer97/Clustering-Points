@@ -3,8 +3,11 @@ using Clustering.Dto;
 using Clustering.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Protocols;
 using System;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -194,6 +197,58 @@ namespace Clustering.Controllers
             return View("GetClusteringMap", dbScan);
         }
 
+
+
+
+
+
+        [HttpGet]
+        public async Task<IActionResult> GetClusteringMapDbScanTypeCity(int typeId, int cityId)
+        {
+            var f = "select ST_X(ST_Centroid(ST_Collect(ARRAY( SELECT \"Geom\" FROM public.\"Points\" where \"TypeId\" = " + typeId + " And ST_Contains((select \"Geom\" from public.\"Cities\" where \"Id\" = " + cityId + "),\"Geom\") )))) as Lan, ST_Y(ST_Centroid(ST_Collect(ARRAY( SELECT \"Geom\" FROM public.\"Points\" where \"TypeId\" = " + typeId + " And ST_Contains((select \"Geom\" from public.\"Cities\" where \"Id\" = " + cityId  + "),\"Geom\") )))) as Lat, 1 as Id";
+   
+
+            var command = _context.Database.GetDbConnection().CreateCommand();
+            command.CommandText = f;
+            _context.Database.OpenConnection();
+
+            using (var rdr = command.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+                    return Json(new { Lan = rdr.GetDouble(0), Lat = rdr.GetDouble(1) });              // Do somthing with this rows string, for example to put them in to a list
+                }
+            }
+
+            return Ok();
+        }
+        
+        [HttpGet]
+        public IActionResult GetClusteringMapDbScanApi(int typeId, int cityId)
+        {
+            //var f = "SELECT ST_GeomFromText(ST_AsText( ST_Centroid((select cluster_group from (SELECT Id, ST_Collect(\"Geom\") AS cluster_group, array_agg(id) AS ids_in_cluster FROM ( SELECT \"Id\", ST_ClusterDBSCAN(\"Geom\", eps := 0.5, minpoints := 5) over () AS Id, \"Geom\" FROM \"Points\" where \"TypeId\" = " + typeId + " And ST_Contains((select \"Geom\" from public.\"Cities\" where \"Id\" = " + cityId + "),\"Geom\")  ) sq GROUP BY Id) as gg))),4326)";
+            
+            var g = "select ST_X(ST_GeomFromText(ST_AsText( ST_Centroid((select cluster_group from (SELECT Id, ST_Collect(\"Geom\") AS cluster_group, array_agg(id) AS ids_in_cluster FROM ( SELECT \"Id\", ST_ClusterDBSCAN(\"Geom\", eps := 0.5, minpoints := 5) over () AS Id, \"Geom\" FROM \"Points\" where \"TypeId\" = " + typeId + " And ST_Contains((select \"Geom\" from public.\"Cities\" where \"Id\" = " + cityId + "),\"Geom\")  ) sq GROUP BY Id) as gg))),4326)), ST_Y(ST_GeomFromText(ST_AsText( ST_Centroid((select cluster_group from (SELECT Id, ST_Collect(\"Geom\") AS cluster_group, array_agg(id) AS ids_in_cluster FROM ( SELECT \"Id\", ST_ClusterDBSCAN(\"Geom\", eps := 0.5, minpoints := 5) over () AS Id, \"Geom\" FROM \"Points\" where \"TypeId\" = " + typeId + " And ST_Contains((select \"Geom\" from public.\"Cities\" where \"Id\" = " + cityId + "),\"Geom\")  ) sq GROUP BY Id) as gg))),4326))";
+
+            var command = _context.Database.GetDbConnection().CreateCommand();
+            command.CommandText = g;
+            _context.Database.OpenConnection();
+
+            var r = new Random();
+            using (var rdr = command.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+                    return Json(new { Lan = rdr.GetDouble(0) + 0.001 * r.NextDouble(), Lat = rdr.GetDouble(1) - 0.001 * r.NextDouble() });              // Do somthing with this rows string, for example to put them in to a list
+                }
+            }
+
+            return Ok();
+        }
+
+
+
+
         [HttpGet]
         public async Task<IActionResult> GetClusteringMapK_Medoidos()
         {
@@ -223,11 +278,41 @@ namespace Clustering.Controllers
             return View("GetMap", points);
         }
 
-        //public async Task<IActionResult> GetJson()
-        //{
-        //    var points = await _context.Points.Take(20).Select(p => p.Lan).ToListAsync();
-        //    return Json(points);
-        //}
+        public async Task<IActionResult> GetJson()
+        {
+            var points = await _context.Points.Take(20).Select(p => new { Lan = p.Lan, Lat = p.Lat }).ToListAsync();
+            return Json(points);
+        }
+
+        public async Task<IActionResult> PointsInCity(int id)
+        {
+            var DbScanQuery = "SELECT * FROM public.\"Points\" where ST_Contains((select \"Geom\" from public.\"Cities\" where \"Id\" = " + id + "),\"Geom\")";
+            var SubGruopPoints = await _context.Points.FromSqlRaw(DbScanQuery).Include(p => p.Type).ToListAsync();
+            var sub = SubGruopPoints.Select(p => new { Name = p.Name,  Lat = p.Lat, Lan = p.Lan, Type = p.TypeId}).ToList();
+            return Json(sub);
+        }
+
+        
+        public async Task<IActionResult> City(int id)
+        {
+            var city = await _context.Cities
+                .FirstOrDefaultAsync(m => m.Id == id);
+            return Json(new { city = city.TextPoly });
+        }
+
+        public async Task<IActionResult> Citye(string name)
+        {
+            var city = await _context.Cities
+                .FirstOrDefaultAsync(m => m.Name == name);
+            return Json(new { city = city.TextPoly });
+        }
+
+        public IActionResult NewCluster()
+        {
+            return View("GetStatisticsMap");
+        }
+
+
 
         private async Task<TypesCities> ForGetClusteringMap(TypesCities input)
         {

@@ -12,6 +12,60 @@
 }
 
 <style>
+
+    .dropdown-check-list {
+        display: inline-block;
+    }
+
+        .dropdown-check-list .anchor {
+            position: relative;
+            cursor: pointer;
+            display: inline-block;
+            padding: 5px 50px 5px 10px;
+            border: 1px solid #ccc;
+        }
+
+            .dropdown-check-list .anchor:after {
+                position: absolute;
+                content: "";
+                border-left: 2px solid black;
+                border-top: 2px solid black;
+                padding: 5px;
+                right: 10px;
+                top: 20%;
+                -moz-transform: rotate(-135deg);
+                -ms-transform: rotate(-135deg);
+                -o-transform: rotate(-135deg);
+                -webkit-transform: rotate(-135deg);
+                transform: rotate(-135deg);
+            }
+
+            .dropdown-check-list .anchor:active:after {
+                right: 8px;
+                top: 21%;
+            }
+
+        .dropdown-check-list ul.items {
+            padding: 2px;
+            display: none;
+            margin: 0;
+            border: 1px solid #ccc;
+            border-top: none;
+        }
+
+            .dropdown-check-list ul.items li {
+                list-style: none;
+            }
+
+        .dropdown-check-list.visible .anchor {
+            color: #0094ff;
+        }
+
+        .dropdown-check-list.visible .items {
+            display: block;
+        }
+
+
     #map {
         width: 100%;
         height: 490px;
@@ -69,6 +123,22 @@
         background: url(https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX24129348.jpg);
         background-size: 100% 100%;
     }
+    .facebook {
+        width: 30px !important;
+        height: 30px !important;
+        border-radius: 18px;
+        border: 2px solid #3F51B5;
+        background: url(https://cdn4.iconfinder.com/data/icons/social-icon-4/842/facebook-512.png);
+        background-size: 100% 100%;
+    }
+    .red-location {
+        width: 30px !important;
+        height: 30px !important;
+        border-radius: 18px;
+        border: 2px solid #3F51B5;
+        background: url(https://freesvg.org/img/flat_location_logo.png);
+        background-size: 100% 100%;
+    }
 
     .heath {
         width: 30px !important;
@@ -94,150 +164,110 @@
         color:black;
         border:0px;
     }
+
+    .circle {
+        width: 60px !important;
+        height: 60px !important;
+        background: url(https://i1.wp.com/www.worth.com/wp-content/uploads/2017/09/map-marker-icon.png);
+        background-size: 100% 100%;
+    }
 </style>
 <div class="row">
     <div class="col-7">
         <div id="map"></div>
     </div>
     <div class="col-5">
-        @*<form asp-action="Create">
-            <div class="form-group">
-                <label class="control-label"></label>
-                <select class="form-control" asp-items="ViewBag.TypeId"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>*@
-        @*<form asp-action="GetClusteringMap" method="post">
-            <div class="form-group">
-                <label asp-for="Types" class="control-label"></label>
-                <select asp-for="Types" class="form-control" asp-items="Model.Types" multiple></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="View In Map" class="btn btn-primary" />
-            </div>
-        </form>*@
-            <h4>Clustering Algorithim</h4>
-            <div class="row mt-1 justify-content-center">
-                <div class="col-8 mt-4">
-                    <a class="btn btn-primary rad" style="" asp-area="" asp-controller="Points" asp-action="GetClusteringMap">&nbsp; K Means &nbsp;</a>
-                </div>
+        <h4>Clustering Algorithim</h4>
+        <div class="row mt-1 justify-content-center">
+            @*<div class="col-8 mt-4">
+            <a class="btn btn-primary rad" style="" asp-area="" asp-controller="Points" asp-action="GetClusteringMap">&nbsp; Method 1 &nbsp;</a>
+        </div>
 
-                <div class="col-8 mt-4">
-                    <a class="btn btn-primary rad" asp-area="" asp-controller="Points" asp-action="GetClusteringMapOptics">&nbsp;&nbsp; OPTICS &nbsp;&nbsp;</a>
-                </div>
+        <div class="col-8 mt-4">
+            <a class="btn btn-primary rad" asp-area="" asp-controller="Points" asp-action="GetClusteringMapOptics">&nbsp;&nbsp; Method 2&nbsp;&nbsp;</a>
+        </div>
 
-                <div class="col-8 mt-4">
-                    <a class="btn btn-primary rad" asp-area="" asp-controller="Points" asp-action="GetClusteringMapK_Medoidos">K Medoids</a>
-                </div>
+        <div class="col-8 mt-4">
+            <a class="btn btn-primary rad" asp-area="" asp-controller="Points" asp-action="GetClusteringMapK_Medoidos">Method 3</a>
+        </div>
 
-                <div class="col-8 mt-4">
-                    <a class="btn btn-primary rad" asp-area="" asp-controller="Points" asp-action="GetClusteringMapDbScan">&nbsp; Db Scan &nbsp;</a>
-                </div>
+        <div class="col-8 mt-4">
+            <a class="btn btn-primary rad" asp-area="" asp-controller="Points" asp-action="GetClusteringMapDbScan">&nbsp; Method 4 &nbsp;</a>
+        </div>
 
-                <div class="col-8 mt-4">
-                    <a class="btn btn-primary rad" onclick="addDiscussion()">&nbsp; Add Discussion &nbsp;</a>
-                </div>
+        <div class="col-8 mt-4">
+            <a class="btn btn-primary rad" onclick="addDiscussion()">&nbsp; Add Discussion &nbsp;</a>
+        </div>*@
+
+            <div class="col-8 mt-4">
+                <select id="types" class="btn btn-primary rad">
+                    <option>اختر النوع</option>
+                    @*<option  value="Karrada">Karrada</option>
+                <option  value="Baghdad">Baghdad</option>*@
+                </select>
             </div>
 
 
-    </div>
+            <div class="col-8 mt-4">
+                <select id="cities" class="btn btn-primary rad" onchange="getCity()">
+                    <option>اختر محافظة</option>
+                    @*<option  value="Karrada">Karrada</option>
+                <option  value="Baghdad">Baghdad</option>*@
+                </select>
+            </div>
+
+            <!--<div class="col-8 mt-4">
+        <select id="types" class="btn btn-primary rad">
+            <option>اختر نوع نقطة</option>-->
+            @*<option  value="Karrada">Karrada</option>
+        <option  value="Baghdad">Baghdad</option>*@
+            <!--</select>
+    </div>-->
+            @*<div class="col-8 mt-4">
+                <select>
+                    <option><input type="checkbox"></option>
+                </select>
+            </div>
+        </div>*@
+
+            <div class="col-8 mt-4">
+                <div id="list1" class="btn-primary rad dropdown-check-list " tabindex="100">
+                    <span class="anchor">اختر الطريقة</span>
+                    <ul class="items">
+                        <li><input type="checkbox" onchange="suggest()" />الطريقة الأولى</li>
+                        <li><input type="checkbox" onchange="suggest2()" />الطريقة الثانية</li>
+                        <li><input type="checkbox" onchange="suggest()" />الطريقة الثالثة</li>
+                        <li><input type="checkbox" onchange="suggest()" />الطريقة الرابعة</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
 </div>
 
 @section Scripts{
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet.markercluster@1.3.0/dist/leaflet.markercluster.js"></script>
     <script>
 
-        @{ 
-            var grouped = Model.Points.GroupBy(p => p.ClusterGroup).ToList();
+        var checkList = document.getElementById('list1');
+        checkList.getElementsByClassName('anchor')[0].onclick = function (evt) {
+            if (checkList.classList.contains('visible'))
+                checkList.classList.remove('visible');
+            else
+                checkList.classList.add('visible');
         }
-        var clusters = @Html.Raw(Json.Serialize(grouped.Select(g => new
-           {
-               clusterGroup = g.Key,
-               points = Model.Points.Where(p => p.ClusterGroup == g.Key).Select(point => new
-               {
-                    id = point.Id,
-                    lat = point.Lat,
-                    lan = point.Lan,
-                    name = point.Name,
-                    type = point.TypeId,
-                    clusterGroup = point.ClusterGroup
-               })
-           })));
-        //console.log(y);
-
-        @*var planes = @Html.Raw(
-        Json.Serialize(
-            Model.Points.Select(point => new
-            {
-                id = point.Id,
-                lat = point.Lat,
-                lan = point.Lan,
-                name = point.Name,
-                type = point.TypeId,
-                clusterGroup = point.ClusterGroup
-            })
-        )
-    );*@
 
 
 
+        getAllCities();
+        getAllTypes();
         var map = L.map('map', {
             zoomControl: true, maxZoom: 28, minZoom: 1
         }).fitBounds([[29.799992708954807, 37.797432216381964], [36.99103453750632, 49.97967038565338]]);
 
-        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);        
-
-        clusters.forEach(function (cluster) {
-
-            var markers = L.markerClusterGroup();
-            cluster.points.forEach(function (point) {
-                var marker = L.marker(new L.latLng(point.lat, point.lan), {
-                    title: point.name,
-                    icon: L.divIcon({
-                        className: icon(point)
-                    })
-                });
-                marker.bindPopup(point.name);
-                markers.addLayer(marker);
-            })
-            map.addLayer(markers);
-
-        });
-
-
-        //for (var i = 0; i < planes.length; i++) {
-        //    var a = planes[i];
-        //    var title = a.name;
-        //    var marker = L.marker(new L.LatLng(a.lat, a.lan), {
-        //        title: title,
-        //        icon: L.divIcon({
-        //            className: icon(a)
-        //        })
-        //    });
-        //    marker.bindPopup(title);
-        //    markers.addLayer(marker);
-        //}
-
-        //var markers2 = L.markerClusterGroup();
-
-        //for (var i = 0; i < planes.length; i++) {
-        //    var a2 = planes[i];
-        //    var title2 = a2.name;
-        //    var marker2 = L.marker(new L.LatLng(a2.lat + Math.floor(Math.random() * 10), a2.lan + Math.floor(Math.random() * 10)), {
-        //        title: title2,
-        //        icon: L.divIcon({
-        //            className: icon(a2)
-        //        })
-        //    });
-        //    marker2.bindPopup(title2);
-        //    markers2.addLayer(marker2);
-        //}
-        //map.addLayer(markers2);
-
-        //map.addLayer(markers);
+        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
 
         function icon(point) {
             switch (point.type) {
@@ -249,16 +279,141 @@
                 case 6: return 'hospital'; 
                 case 7: return 'heath'; 
                 case 8: return 'danger'; 
+                case 9: return 'red-location'; 
+                case 10: return 'circle'; 
                 default: return 'my-custom-icon'
             }
         }
 
-        function addDiscussion() {
-            L.polygon([
-                [51.509, -0.08],
-                [51.503, -0.06],
-                [51.51, -0.047]
-            ]).addTo(map);
+        function getCity() {
+            var x = document.getElementById("cities").value;
+            axios.get('/Points/City/' + x).then(response => {
+                var f = L.polygon(JSON.parse(response.data.city));
+
+                addDiscussion(x);
+                map.fitBounds(f.getBounds())
+                    f.addTo(map);
+
+
+                //axios.get('/Points/City/' + 8).then(response2 => {
+                //    L.polygon(JSON.parse(response2.data.city), { color: 'red' }).addTo(map);
+                //});
+            });
+        }
+
+
+        function getTypes() {
+            var x = document.getElementById("types").value;
+            axios.get('/Points/Type/' + x).then(response => {
+                var f = L.polygon(JSON.parse(response.data.city));
+
+                addDiscussion(x);
+                map.fitBounds(f.getBounds())
+                    f.addTo(map);
+
+
+                //axios.get('/Points/City/' + 8).then(response2 => {
+                //    L.polygon(JSON.parse(response2.data.city), { color: 'red' }).addTo(map);
+                //});
+            });
+        }
+
+        function getAllCities() {
+            axios.get('/Cities1/GetAll/').then(response => {
+                var tag = document.getElementById("cities");
+                for (var i = 0; i < response.data.length; i++) {
+                    var option = document.createElement('option');
+                    option.textContent = response.data[i].name;
+                    option.value = response.data[i].id;
+
+                    tag.appendChild(option)
+                }
+            });
+        }
+
+
+
+        function getAllTypes() {
+            axios.get('/Types/GetAll/').then(response => {
+                var tag = document.getElementById("types");
+                for (var i = 0; i < response.data.length; i++) {
+                    var option = document.createElement('option');
+                    option.textContent = response.data[i].name;
+                    option.value = response.data[i].id;
+
+                    tag.appendChild(option)
+                }
+            });
+        }
+
+        function addDiscussion(id =1) {
+            //getCities()
+
+            axios.get('/Points/PointsInCity/' + id).then(response => {
+                var data = response.data
+
+                var markers2 = L.markerClusterGroup();
+                for (var i = 0; i < data.length; i++) {
+                    var marker2 = L.marker(new L.latLng(data[i].lat, data[i].lan), {
+                        title: data[i].name,
+                        icon: L.divIcon({
+                            className: icon(data[i])
+                        })
+                    });
+                    markers2.addLayer(marker2);
+
+                };
+                map.addLayer(markers2);
+            });
+        }
+
+        //function addOption() {
+        //    var option = document.createElement('option');
+        //    option.textContent = 1;
+        //    option.value = 1
+        //}
+
+        function suggest() {
+            var type = document.getElementById("types").value;
+            var city = document.getElementById("cities").value;
+
+            axios.get('/Points/GetClusteringMapDbScanTypeCity?typeId=' + type + ' &cityId=' + city).then(response => {
+                var data = response.data
+                L.marker([data.lat, data.lan], {
+                    //title: data[i].name,
+                    icon: L.divIcon({
+                        className: 'circle',
+                        iconSize: [38, 95],
+                        shadowSize: [50, 64],
+                        iconAnchor: [22, 94],
+                        shadowAnchor: [4, 62],
+                        popupAnchor: [-3, -76]
+                    })
+                }).addTo(map);
+            });
+        }
+
+
+        function suggest2() {
+            var type = document.getElementById("types").value;
+            var city = document.getElementById("cities").value;
+            alert();
+            axios.get('/Points/GetClusteringMapDbScanApi?typeId=' + type + ' &cityId=' + city).then(response => {
+                console.log(response);
+                var data = response.data
+                alert(data.lan);
+                L.marker([data.lat, data.lan], {
+                    //title: data[i].name,
+                    icon: L.divIcon({
+                        className: 'circle',
+                        iconSize: [38, 95],
+                        shadowSize: [50, 64],
+                        iconAnchor: [22, 94],
+                        shadowAnchor: [4, 62],
+                        popupAnchor: [-3, -76]
+                    })
+                }).addTo(map);
+            });
         }
 
         

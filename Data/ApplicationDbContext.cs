@@ -23,9 +23,14 @@ namespace Clustering.Data
             modelBuilder.Entity<Point>()
                 .Property(b => b.Geom)
                 .HasComputedColumnSql("public.ST_SetSRID(ST_MakePoint(\"Lan\",\"Lat\"),4326)");
+
+            modelBuilder.Entity<City>()
+                .Property(b => b.Geom)
+                .HasComputedColumnSql("ST_GeomFromText(\"TextFormat\",4326)");
         }
 
         public DbSet<Point> Points { get; set; }
+        public DbSet<Test> Tests { get; set; }
         public DbSet<Type> Types { get; set; }
         public DbSet<City> Cities { get; set; }
     }

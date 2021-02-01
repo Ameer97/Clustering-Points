@@ -8,6 +8,16 @@
   <ItemGroup>
     <Compile Remove="Migrations\20200906151712_add_city_table.cs" />
     <Compile Remove="Migrations\20200906151712_add_city_table.Designer.cs" />
+    <Compile Remove="Migrations\20210128050817_city_geom.cs" />
+    <Compile Remove="Migrations\20210128050817_city_geom.Designer.cs" />
+    <Compile Remove="Migrations\20210128051018_city_geom.cs" />
+    <Compile Remove="Migrations\20210128051018_city_geom.Designer.cs" />
+    <Compile Remove="Migrations\20210128052657_city_geom.cs" />
+    <Compile Remove="Migrations\20210128052657_city_geom.Designer.cs" />
+    <Compile Remove="Migrations\20210128052809_city_geom.cs" />
+    <Compile Remove="Migrations\20210128052809_city_geom.Designer.cs" />
+    <Compile Remove="Migrations\20210128052842_city_geom.cs" />
+    <Compile Remove="Migrations\20210128052842_city_geom.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -15,12 +25,16 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.7" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.7" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.8" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.7" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.7" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.11">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.4" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite" Version="3.1.4" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
