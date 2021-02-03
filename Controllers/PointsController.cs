@@ -213,7 +213,7 @@ namespace Clustering.Controllers
             var command = _context.Database.GetDbConnection().CreateCommand();
             command.CommandText = f;
             _context.Database.OpenConnection();
-
+            var PointCount = await _context.Points.Where(p => p.TypeId == typeId).CountAsync();
             using (var rdr = command.ExecuteReader())
             {
                 while (rdr.Read())
@@ -222,7 +222,8 @@ namespace Clustering.Controllers
                     {
                         time.Stop();
                         return Json(new { Lan = rdr.GetDouble(0), Lat = rdr.GetDouble(1),
-                            Time = time.Interval
+                            Time = time.Interval,
+                            Count = PointCount
                         });              // Do somthing with this rows string, for example to put them in to a list
 
                     }
@@ -236,17 +237,16 @@ namespace Clustering.Controllers
         }
         
         [HttpGet]
-        public IActionResult GetClusteringMapDbScanApi(int typeId, int cityId)
+        public async Task<IActionResult> GetClusteringMapDbScanApi(int typeId, int cityId)
         {
             //var f = "SELECT ST_GeomFromText(ST_AsText( ST_Centroid((select cluster_group from (SELECT Id, ST_Collect(\"Geom\") AS cluster_group, array_agg(id) AS ids_in_cluster FROM ( SELECT \"Id\", ST_ClusterDBSCAN(\"Geom\", eps := 0.5, minpoints := 5) over () AS Id, \"Geom\" FROM \"Points\" where \"TypeId\" = " + typeId + " And ST_Contains((select \"Geom\" from public.\"Cities\" where \"Id\" = " + cityId + "),\"Geom\")  ) sq GROUP BY Id) as gg))),4326)";
             var time = new System.Timers.Timer();
             time.Start();
             var g = "select ST_X(ST_GeomFromText(ST_AsText( ST_Centroid((select cluster_group from (SELECT Id, ST_Collect(\"Geom\") AS cluster_group, array_agg(id) AS ids_in_cluster FROM ( SELECT \"Id\", ST_ClusterDBSCAN(\"Geom\", eps := 0.5, minpoints := 5) over () AS Id, \"Geom\" FROM \"Points\" where \"TypeId\" = " + typeId + " And ST_Contains((select \"Geom\" from public.\"Cities\" where \"Id\" = " + cityId + "),\"Geom\")  ) sq GROUP BY Id) as gg))),4326)), ST_Y(ST_GeomFromText(ST_AsText( ST_Centroid((select cluster_group from (SELECT Id, ST_Collect(\"Geom\") AS cluster_group, array_agg(id) AS ids_in_cluster FROM ( SELECT \"Id\", ST_ClusterDBSCAN(\"Geom\", eps := 0.5, minpoints := 5) over () AS Id, \"Geom\" FROM \"Points\" where \"TypeId\" = " + typeId + " And ST_Contains((select \"Geom\" from public.\"Cities\" where \"Id\" = " + cityId + "),\"Geom\")  ) sq GROUP BY Id) as gg))),4326))";
-
             var command = _context.Database.GetDbConnection().CreateCommand();
             command.CommandText = g;
             _context.Database.OpenConnection();
-
+            var PointCount = await _context.Points.Where(p => p.TypeId == typeId).CountAsync();
             var r = new Random();
             using (var rdr = command.ExecuteReader())
             {
@@ -258,7 +258,9 @@ namespace Clustering.Controllers
                         return Json(new { 
                             Lan = rdr.GetDouble(0) + 0.004 * r.NextDouble(), 
                             Lat = rdr.GetDouble(1) - 0.002 * r.NextDouble(),
-                            Time = time.Interval });              // Do somthing with this rows string, for example to put them in to a list
+                            Time = time.Interval,
+                            Count = PointCount
+                        });              // Do somthing with this rows string, for example to put them in to a list
 
                     }
                     catch { }
@@ -338,9 +340,9 @@ namespace Clustering.Controllers
             return Json(points);
         }
 
-        public async Task<IActionResult> PointsInCity(int id)
+        public async Task<IActionResult> PointsInCity(int cityId, int typeId)
         {
-            var DbScanQuery = "SELECT * FROM public.\"Points\" where ST_Contains((select \"Geom\" from public.\"Cities\" where \"Id\" = " + id + "),\"Geom\")";
+            var DbScanQuery = "SELECT * FROM public.\"Points\" where \"TypeId\" = " + typeId + " and ST_Contains((select \"Geom\" from public.\"Cities\" where \"Id\" = " + cityId + "),\"Geom\")";
             var SubGruopPoints = await _context.Points.FromSqlRaw(DbScanQuery).Include(p => p.Type).ToListAsync();
             var sub = SubGruopPoints.Select(p => new { Name = p.Name,  Lat = p.Lat, Lan = p.Lan, Type = p.TypeId}).ToList();
             return Json(sub);

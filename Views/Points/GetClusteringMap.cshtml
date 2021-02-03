@@ -255,16 +255,11 @@
                     </ul>
                 </div>
             </div>
-            @{
-                var message = false;
-            }
 
 
             <div class="col-8 mt-4">
                 <select id="locations" class="btn btn-primary rad" onchange="getSolution()">
                     <option>اقترح حل ضمني</option>
-                    @*<option  value="Karrada">Karrada</option>
-                <option  value="Baghdad">Baghdad</option>*@
                 </select>
             </div>
 
@@ -412,8 +407,9 @@
 
         function addDiscussion(id =1) {
             //getCities()
+            var y = document.getElementById("types").value;
 
-            axios.get('/Points/PointsInCity/' + id).then(response => {
+            axios.get('/Points/PointsInCity?cityId=' + id + '&typeId=' + y).then(response => {
                 var data = response.data
 
                 var markers2 = L.markerClusterGroup();
@@ -431,12 +427,6 @@
             });
         }
 
-        //function addOption() {
-        //    var option = document.createElement('option');
-        //    option.textContent = 1;
-        //    option.value = 1
-        //}
-
         function suggest() {
             var type = document.getElementById("types").value;
             var city = document.getElementById("cities").value;
@@ -451,6 +441,7 @@
 
                 var textra = document.getElementById("Textarea1");
                 textra.value += "الوقت المقدر لإيجاد المقترح الأول: " + parseFloat(data.time + 0.003 * Math.random()).toFixed(4)/1000  + "(Second) \n ";
+                textra.value += "عدد النقاط للنوع المختار: " + data.count  + "\n ";
 
 
             }).catch(error => {
@@ -474,7 +465,7 @@
 
                 var textra = document.getElementById("Textarea1");
                 textra.value += "الوقت المقدر لإيجاد المقترح الثاني: " + parseFloat(data.time + 0.04 * Math.random()).toFixed(4)/1000 + "(Second) \n ";
-                
+                textra.value += "عدد النقاط للنوع المختار: " + data.count + "\n ";
 
             }).catch(error => {
                 alert("لا يمكن عمل الخوارزمية من دون عدد كافي من النقاط ");
@@ -496,7 +487,7 @@
 
                 var textra = document.getElementById("Textarea1");
                 textra.value += "الوقت المقدر لإيجاد المقترح الثالث: " + parseFloat(data.time + 0.004 * Math.random()).toFixed(4)/1000 + "(Second) \n ";
-
+                textra.value += "عدد النقاط للنوع المختار: " + data.count + "\n ";
 
             }).catch(error => {
                 alert("لا يمكن عمل الخوارزمية من دون عدد كافي من النقاط ");
@@ -520,7 +511,7 @@
 
                 var textra = document.getElementById("Textarea1");
                 textra.value += "الوقت المقدر لإيجاد المقترح الرابع: " + parseFloat(data.time + 0.08 * Math.random()).toFixed(4)/1000 + "(Second) \n ";
-
+                textra.value += "عدد النقاط للنوع المختار: " + data.count + "\n ";
 
             }).catch(error => {
                 alert("لا يمكن عمل الخوارزمية من دون عدد كافي من النقاط ");
