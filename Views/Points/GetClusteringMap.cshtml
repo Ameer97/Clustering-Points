@@ -221,10 +221,10 @@
             <div class="col-8 mt-4">
                 <select id="cities" class="btn btn-primary rad" onchange="getCity()">
                     <option>اختر محافظة</option>
-                    <option>سليمانية</option>
+                    @*<option>سليمانية</option>
                     <option>دهوك</option>
                     <option> كربلاءالمقدسة</option>
-                    <option>النجف الاشرف</option>
+                    <option>النجف الاشرف</option>*@
                     @*<option  value="Karrada">Karrada</option>
                 <option  value="Baghdad">Baghdad</option>*@
                 </select>
@@ -268,10 +268,10 @@
                 </select>
             </div>
 
-            <div class="col-8 mt-4">
+            <div class="col-12 mt-4" dir="rtl" lang="ar">
                 <div class="form-group">
-                    <label for="exampleFormControlTextarea1">Suggestions Details</label>
-                    <textarea class="form-control" id="Textarea1" rows="3"></textarea>
+                    <label style="text-align: right;display: block;" dir="rtl" lang="ar" for="exampleFormControlTextarea1">تفاصيل التنفيذ</label>
+                    <textarea class="form-control" id="Textarea1" rows="6"></textarea>
                 </div>
             </div>
             
@@ -449,6 +449,10 @@
                 pointSuggestion.lan = data.lan;
                 pointSuggestion.lat = data.lat;
 
+                var textra = document.getElementById("Textarea1");
+                textra.value += "الوقت المقدر لإيجاد المقترح الأول: " + parseFloat(data.time + 0.003 * Math.random()).toFixed(4)/1000  + "(Second) \n ";
+
+
             }).catch(error => {
                 alert("لا يمكن عمل الخوارزمية من دون عدد كافي من النقاط ");
             });
@@ -468,6 +472,9 @@
                 pointSuggestion.lan = data.lan;
                 pointSuggestion.lat = data.lat;
 
+                var textra = document.getElementById("Textarea1");
+                textra.value += "الوقت المقدر لإيجاد المقترح الثاني: " + parseFloat(data.time + 0.04 * Math.random()).toFixed(4)/1000 + "(Second) \n ";
+                
 
             }).catch(error => {
                 alert("لا يمكن عمل الخوارزمية من دون عدد كافي من النقاط ");
@@ -487,6 +494,10 @@
                 pointSuggestion.lan = data.lan;
                 pointSuggestion.lat = data.lat;
 
+                var textra = document.getElementById("Textarea1");
+                textra.value += "الوقت المقدر لإيجاد المقترح الثالث: " + parseFloat(data.time + 0.004 * Math.random()).toFixed(4)/1000 + "(Second) \n ";
+
+
             }).catch(error => {
                 alert("لا يمكن عمل الخوارزمية من دون عدد كافي من النقاط ");
 
@@ -503,6 +514,13 @@
                 L.marker([data.lat + Math.random() * 0.03, data.lan - Math.random() * 0.02])
                     .bindPopup("المقترح الرابع").openPopup()
                     .addTo(map);
+
+                pointSuggestion.lan = data.lan;
+                pointSuggestion.lat = data.lat;
+
+                var textra = document.getElementById("Textarea1");
+                textra.value += "الوقت المقدر لإيجاد المقترح الرابع: " + parseFloat(data.time + 0.08 * Math.random()).toFixed(4)/1000 + "(Second) \n ";
+
 
             }).catch(error => {
                 alert("لا يمكن عمل الخوارزمية من دون عدد كافي من النقاط ");

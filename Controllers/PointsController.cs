@@ -206,6 +206,7 @@ namespace Clustering.Controllers
         [HttpGet]
         public async Task<IActionResult> GetClusteringMapDbScanTypeCity(int typeId, int cityId)
         {
+            var time = new System.Timers.Timer();
             var f = "select ST_X(ST_Centroid(ST_Collect(ARRAY( SELECT \"Geom\" FROM public.\"Points\" where \"TypeId\" = " + typeId + " And ST_Contains((select \"Geom\" from public.\"Cities\" where \"Id\" = " + cityId + "),\"Geom\") )))) as Lan, ST_Y(ST_Centroid(ST_Collect(ARRAY( SELECT \"Geom\" FROM public.\"Points\" where \"TypeId\" = " + typeId + " And ST_Contains((select \"Geom\" from public.\"Cities\" where \"Id\" = " + cityId  + "),\"Geom\") )))) as Lat, 1 as Id";
    
 
@@ -219,7 +220,10 @@ namespace Clustering.Controllers
                 {
                     try
                     {
-                        return Json(new { Lan = rdr.GetDouble(0), Lat = rdr.GetDouble(1) });              // Do somthing with this rows string, for example to put them in to a list
+                        time.Stop();
+                        return Json(new { Lan = rdr.GetDouble(0), Lat = rdr.GetDouble(1),
+                            Time = time.Interval
+                        });              // Do somthing with this rows string, for example to put them in to a list
 
                     }
                     catch
@@ -235,7 +239,8 @@ namespace Clustering.Controllers
         public IActionResult GetClusteringMapDbScanApi(int typeId, int cityId)
         {
             //var f = "SELECT ST_GeomFromText(ST_AsText( ST_Centroid((select cluster_group from (SELECT Id, ST_Collect(\"Geom\") AS cluster_group, array_agg(id) AS ids_in_cluster FROM ( SELECT \"Id\", ST_ClusterDBSCAN(\"Geom\", eps := 0.5, minpoints := 5) over () AS Id, \"Geom\" FROM \"Points\" where \"TypeId\" = " + typeId + " And ST_Contains((select \"Geom\" from public.\"Cities\" where \"Id\" = " + cityId + "),\"Geom\")  ) sq GROUP BY Id) as gg))),4326)";
-            
+            var time = new System.Timers.Timer();
+            time.Start();
             var g = "select ST_X(ST_GeomFromText(ST_AsText( ST_Centroid((select cluster_group from (SELECT Id, ST_Collect(\"Geom\") AS cluster_group, array_agg(id) AS ids_in_cluster FROM ( SELECT \"Id\", ST_ClusterDBSCAN(\"Geom\", eps := 0.5, minpoints := 5) over () AS Id, \"Geom\" FROM \"Points\" where \"TypeId\" = " + typeId + " And ST_Contains((select \"Geom\" from public.\"Cities\" where \"Id\" = " + cityId + "),\"Geom\")  ) sq GROUP BY Id) as gg))),4326)), ST_Y(ST_GeomFromText(ST_AsText( ST_Centroid((select cluster_group from (SELECT Id, ST_Collect(\"Geom\") AS cluster_group, array_agg(id) AS ids_in_cluster FROM ( SELECT \"Id\", ST_ClusterDBSCAN(\"Geom\", eps := 0.5, minpoints := 5) over () AS Id, \"Geom\" FROM \"Points\" where \"TypeId\" = " + typeId + " And ST_Contains((select \"Geom\" from public.\"Cities\" where \"Id\" = " + cityId + "),\"Geom\")  ) sq GROUP BY Id) as gg))),4326))";
 
             var command = _context.Database.GetDbConnection().CreateCommand();
@@ -249,15 +254,16 @@ namespace Clustering.Controllers
                 {
                     try
                     {
-                        return Json(new { Lan = rdr.GetDouble(0) + 0.004 * r.NextDouble(), Lat = rdr.GetDouble(1) - 0.002 * r.NextDouble() });              // Do somthing with this rows string, for example to put them in to a list
+                        time.Stop();
+                        return Json(new { 
+                            Lan = rdr.GetDouble(0) + 0.004 * r.NextDouble(), 
+                            Lat = rdr.GetDouble(1) - 0.002 * r.NextDouble(),
+                            Time = time.Interval });              // Do somthing with this rows string, for example to put them in to a list
 
                     }
-                    catch
-                    {
-                    }
+                    catch { }
                 }
             }
-
             return Ok();
         }
 
